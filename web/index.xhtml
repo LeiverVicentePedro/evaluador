@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Inicio</title>
+    </h:head>
+    <h:body>
+        <p:growl autoUpdate="true"/>
+        <div  Style="margin-top: 0.5em;">
+            <center>
+                <div>
+                    <p:graphicImage library="images" name="bannerGvc.png" width="80%" height="190px" style="background-repeat: no-repeat; position: relative;"/>
+                </div>
+                <p:separator style="width: 80%"/>
+                <p:separator style="width: 80%"/>
+                <p:separator style="width: 80%; visibility: hidden; border-bottom: 30px;"/>
+                <div>
+                    <h:form>
+                        <p:panel header="Acceso" style="background: #ccffcc; border-radius:0 0 3em 3em; border: solid #006600 0.3em; width: 30%;">
+
+                            <h:panelGrid columns="1" style=" text-align: center">
+                                <h:column><br/></h:column>
+                                <p:outputLabel value="Clave de Usuario:"/>
+                                <p:inputText style="text-align: center;"/>
+                                <h:column><br/></h:column>
+                                <p:commandButton value="Acceder" action="bienvenida.xhtml"/>
+                                <h:column><br/></h:column>
+                            </h:panelGrid>
+
+                        </p:panel>
+                    </h:form>   
+                </div>
+
+                <p:separator style="width: 80%; visibility: hidden; border-bottom: 30px;"/>
+            </center>
+            <div id="footer" class="col-md-12" style=" font-size: 12px; text-align: center;">
+                <br/>
+                <div style="webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; vertical-align: baseline; margin-bottom: 5px; position: relative;">
+
+                    <p:graphicImage library="images" name="logoGVC.png" width="50" height="50" style="background-repeat: no-repeat; background-size: 210px 65px; display: block; text-indent: -9999px; margin: -10px auto 0;"/>  
+                </div>
+                <p:separator style="width: 80%"/>
+                <b>
+                    <p id="pie" style="margin: 0 0 20px; text-align: center; font: 11px/17px 'soberana_sansregular',serif; margin-bottom: 20px; white-space: normal; border: 0; outline: 0;">
+                        <b style="font-family: inherit; font-style: inherit;">Grupo de Veirificación y Certificación A.C. 
+                            <br/>Bugambilias #5, Cuapiaxtla de Madero,Puebla, C.P. 75420 <br/>
+                            Tels. (249) 426 18 88, Correo electrónico: gerenciagvc@yahoo.com.mx<br/>
+                            <br/>
+                            Kayver Desarrollo de sistemas.
+                        </b>
+                    </p>
+                </b>
+            </div>
+
+
+
+        </div>
+    </h:body>
+</html>
+

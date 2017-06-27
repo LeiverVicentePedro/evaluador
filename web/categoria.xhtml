@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:growl id="mensaje" autoUpdate="true"/>
+
+                    <p:separator style="visibility: hidden;"/>
+
+                    <p:outputLabel class="titulo" value="Normas de Evaluación"/>
+
+                    <center>
+                        <p:separator style="visibility: hidden;"/>
+                        <div align="justify">
+                            <p:commandButton value="nuevo" style="text-align: left;"/>
+                        </div>
+
+                        <p:separator style="visibility: hidden;"/>
+
+                        <p:dataTable value="#{categoriaBEAN.listaCategoria}" var="categoria" emptyMessage="No hay Elementos Encotrados."
+
+                                     paginator="true" rows="15"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     paginatorPosition="bottom">
+                            <p:column headerText="Numero">
+                                <p:outputLabel value="#{categoria.idCategoria}"/>
+                            </p:column>
+                            <p:column headerText="Norma">
+                                <p:outputLabel value="#{categoria.tipo}"/>
+                            </p:column>
+                            <p:column headerText="Estatus">
+                                <p:outputLabel value="#{categoria.estatus}"/>
+                            </p:column>
+                            <p:column headerText="Modificar">
+                                
+                            </p:column>
+                            <p:column headerText="Desactivar">
+
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:separator style="visibility: hidden;"/>
+
+                    </center>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

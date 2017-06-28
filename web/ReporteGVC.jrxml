@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b151c0ca-7f73-4800-9c5f-8f5e5141d6e2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="145"/>
+	<parameter name="normaEvaluacion" class="java.lang.String"/>
+	<parameter name="calificacion" class="java.lang.String"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement x="173" y="40" width="362" height="69" uuid="80a67924-8cfd-46fb-a9a3-65d2f8e5d5e9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="28"/>
+				</textElement>
+				<text><![CDATA[GVC Grupo de Verificación y Certificación AC.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="34" y="21" width="110" height="99" uuid="55f9e29b-0a28-4481-afc8-c3791227ab98"/>
+				<imageExpression><![CDATA["http://grupogvc.org/logo/logoReporte.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="496" splitType="Stretch">
+			<staticText>
+				<reportElement x="144" y="88" width="275" height="24" uuid="ca6dfc3d-df15-40bf-a34f-7a5446799874"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Resultado final de evaluación correspondiente a:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="112" width="572" height="27" uuid="e879d2dd-77b9-43db-8399-413b8d00d09c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{normaEvaluacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="144" y="195" width="275" height="20" uuid="6d9b78d9-ef6e-499d-ae09-26b956d1cbd5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Calificación obtenida:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="225" width="572" height="69" uuid="f10e9b57-1c9f-42ed-ac43-2d406d13a18f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="48" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{calificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="144" y="322" width="275" height="20" uuid="5617fd95-5676-43f8-8ff1-2ef4196574da"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[(Calificación minima aprobatoria 8.0)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="395" width="72" height="20" uuid="16d0c82d-55cc-4134-96b0-660a322984e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="144" y="395" width="415" height="20" uuid="656c3bc4-b6d1-49d3-a5ea-6238d2faa4ab"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="453" width="62" height="20" uuid="fd4511e2-402e-4393-8550-6bbde7a0b54a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="453" width="124" height="20" uuid="d2961feb-cd43-4aa9-a6ce-7e51ed1b6308"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="572" height="20" uuid="be675a04-df07-47e2-b0d4-e3b602b6cfca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Área de frutas 2, Local 1, primer piso, tianguis Lic. Benito Juárez AC. San Salvador Huixcolotla Puebla. C.P. 75440]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

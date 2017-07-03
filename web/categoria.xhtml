@@ -23,7 +23,7 @@
 
                     <p:separator style="visibility: hidden;"/>
                     <div align="justify">
-                        <p:commandButton value="Nuevo" style="text-align: left;" actionListener="#{categoriaBEAN.setAccion('Registrar')}" oncomplete="PF('Datos').show();" update=":dialogoDatos"/>
+                        <p:commandButton class="boton" value="Nuevo" icon="fa fa-plus-circle" style="text-align: left;" actionListener="#{categoriaBEAN.setAccion('Registrar')}" oncomplete="PF('Datos').show();" update=":dialogoDatos"/>
                     </div>
 
                     <p:separator style="visibility: hidden;"/>
@@ -68,18 +68,19 @@
                                   filterStyle="visibility:hidden; height:0">
                             <p:outputLabel value="#{categoria.estatus}"/>
                         </p:column>
-                        <p:column headerText="Modificar">
-                            <p:commandButton value="a" actionListener="#{categoriaBEAN.elegirDatoCategoria(categoria)}" oncomplete="PF('Datos').show();" update=":dialogoDatos"/>
+                        <p:column headerText="Modificar" style="text-align: center;">
+                            <p:commandButton icon="fa fa-pencil" actionListener="#{categoriaBEAN.elegirDatoCategoria(categoria)}" oncomplete="PF('Datos').show();" update=":dialogoDatos"/>
                         </p:column>
-                        <p:column headerText="Desactivar">
-                            <p:commandButton value="0" actionListener="#{categoriaBEAN.bajaCategoria(categoria)}" update="tablaCategorias"/>
+                        <p:column headerText="Desactivar" style="text-align: center;">
+                            <p:commandButton icon="fa fa-ban" actionListener="#{categoriaBEAN.bajaCategoria(categoria)}" update="tablaCategorias"/>
                         </p:column>
                     </p:dataTable>
 
                     <p:separator style="visibility: hidden;"/>
 
                 </h:form>
-                <p:dialog id="dialogoDatos" header="Datos de Nueva Norma" widgetVar="Datos" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                
+                    <p:dialog id="dialogoDatos" header="Datos de la Norma" widgetVar="Datos" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <h:form id="dialogoCategoria">
                         <h:panelGrid columns="2">
                             <p:outputLabel value="Norma:"/>
@@ -95,12 +96,12 @@
                             <p:column/><p:column/>
                         </h:panelGrid>
                         <center>
-                            <p:commandButton value="#{categoriaBEAN.accion}" actionListener="#{categoriaBEAN.operarCategoria()}" oncomplete="PF('Datos').hide();" update=":formaExterior :dialogoDatos" />
-                            <p:commandButton value="Cancelar" immediate="true" action="#{categoriaBEAN.limpiarCategoria()}" oncomplete="PF('Datos').hide();" />
+                            <p:commandButton class="boton" value="#{categoriaBEAN.accion}" actionListener="#{categoriaBEAN.operarCategoria()}" oncomplete="PF('Datos').hide();" update=":formaExterior :dialogoDatos" />
+                            <p:commandButton class="boton" value="Cancelar" immediate="true" action="#{categoriaBEAN.limpiarCategoria()}" oncomplete="PF('Datos').hide();" />
                         </center>
                     </h:form>    
                 </p:dialog>
-
+                
 
             </ui:define>
 

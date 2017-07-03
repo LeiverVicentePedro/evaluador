@@ -21,10 +21,9 @@ public class CategoriaDAO extends Conexion{
     public void insertarCategoria(Categoria categoria) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement inserta = this.getConexion().prepareStatement("INSERT INTO categoria(idcategoria,tipo,estatus) VALUES(?,?,?)");
-            inserta.setInt(1, categoria.getIdCategoria());
-            inserta.setString(2, categoria.getTipo());
-            inserta.setBoolean(3, categoria.getEstatus());
+            PreparedStatement inserta = this.getConexion().prepareStatement("INSERT INTO categoria(tipo,estatus) VALUES(?,?)");
+            inserta.setString(1, categoria.getTipo());
+            inserta.setBoolean(2, categoria.getEstatus());
             inserta.executeUpdate();
         }catch(Exception ex){
             System.out.println("Error en CategoriaDAO -> insertarCategoria "+ex);
@@ -72,4 +71,23 @@ public class CategoriaDAO extends Conexion{
         return listaCategorias;
     }
     
+    public Categoria buscarIdCategoria(int idCategoria) throws Exception{
+        Categoria categoria = new Categoria();
+        try{
+            this.Conectar();
+            PreparedStatement consulta = this.getConexion().prepareStatement("SELECT * FROM categoria WHERE idcategoria=?");
+            consulta.setInt(1, idCategoria);
+            ResultSet resultado = consulta.executeQuery();
+            while(resultado.next()){
+                categoria.setIdCategoria(resultado.getInt("idcategoria"));
+                categoria.setTipo(resultado.getString("tipo"));
+                categoria.setEstatus(resultado.getBoolean("estatus"));
+            }
+        }catch(Exception ex){
+            System.out.println("Error en CategoriaDAO -> buscarIdCategoria: "+ex);
+        }finally{
+            this.Cerrar();
+        }
+        return categoria;
+    }
 }

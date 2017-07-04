@@ -38,7 +38,7 @@ public class CategoriaBEAN implements Serializable {
     private String accion;
     //objeto para cuando se selecciona un dato en la tabla
     Categoria categoriaSeleccionada = new Categoria();
-    
+        
     //getter y setter de los objetos y listas 
     public Categoria getCategoria() {
         return categoria;

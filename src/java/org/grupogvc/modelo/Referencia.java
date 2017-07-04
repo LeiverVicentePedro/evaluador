@@ -14,7 +14,7 @@ public class Referencia {
     private int idReferencia;
     private String descripcion;
     private String referencia;
-    private Categoria idCategoria = new Categoria();
+    private Categoria idCategoria;
 
     //getter y setter para las variables anteriores.
     public int getIdReferencia() {
@@ -48,6 +48,32 @@ public class Referencia {
     public void setIdCategoria(Categoria idCategoria) {
         this.idCategoria = idCategoria;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.idReferencia;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Referencia other = (Referencia) obj;
+        if (this.idReferencia != other.idReferencia) {
+            return false;
+        }
+        return true;
+    }
+    
     
    
 }

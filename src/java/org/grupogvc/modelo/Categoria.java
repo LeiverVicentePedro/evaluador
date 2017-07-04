@@ -37,6 +37,32 @@ public class Categoria {
     public void setEstatus(Boolean estatus) {
         this.estatus = estatus;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + this.idCategoria;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Categoria other = (Categoria) obj;
+        if (this.idCategoria != other.idCategoria) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
 }

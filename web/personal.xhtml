@@ -1,14 +1,329 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./WEB-INF/template/plantilla.xhtml">
 
             <ui:define name="content">
-                content
+               <p:separator style="visibility: hidden;"/> 
+        <h:form id="formaExterior">        
+            <p:growl id="msj" showDetail="true" sticky="true" autoUpdate="true"/>
+            <center>
+                      <p:separator style="visibility: hidden;"/> 
+                   <p:outputLabel value="Listado de Personal" style="font-size: 25px;" />
+                    </center>
+            <p:separator style="visibility: hidden;"/> 
+            <div align="justify">
+                <p:commandButton value="Nuevo" oncomplete="PF('DatosUsuario').show();" actionListener="#{personalBEAN.setAccion('Registrar')}" 
+                              update=":dialogoUsuario" >         
+            
+                    <f:ajax execute="#{personalBEAN.listarPersona()}" render="data" />
+            </p:commandButton>
+            </div>
+             <p:separator style="visibility: hidden;"/> 
+             <p:dataTable id="data" var="persona" value="#{personalBEAN.listapersonal}" 
+                         
+                          style="font-size: 14px;" selectionMode="multiple" selection="#{personalBEAN.seleccionpersonal}" rowKey="#{persona.idpersonal}"
+                                 liveResize="true"
+                                 
+                                 liveScroll="true" scrollRows="15" scrollWidth="100%"
+                                 scrollable="true"
+                                 
+                                 widgetVar="buscar"
+                                 filteredValue="#{personalBEAN.filterpersonal}"
+                          emptyMessage="No hay elementos encontrados"
+                          paginator="true" rows="10"
+                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                          paginatorPosition="bottom">
+                 
+                          <f:facet name="header">
+                              <div align="right" >
+                                <p:outputPanel class="text-right">
+                                   <h:outputText value="Buscar:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('buscar').filter();" 
+                                             
+                                             style="width:150px" />
+                                </p:outputPanel>
+                                  </div>
+                           </f:facet>
+                 
+                <p:column headerText="Clave" 
+                          sortBy="#{persona.clave}" 
+                          filterBy="#{persona.clave}"
+                          filterMatchMode="startsWith"
+                          filterStyle="visibility:hidden; height:0"
+                          style="text-transform: uppercase" width="35">
+                    
+                    <h:outputText value="#{persona.clave}" />
+                   
+                </p:column>
+                 <p:column headerText="NOMBRE"
+                           sortBy="#{persona.nombre}"
+                                  filterBy="#{persona.nombre}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+
+                            <p:outputLabel value="#{persona.nombre}" />
+
+                        </p:column>
+                
+                <p:column headerText="APELLIDOPAT"
+                          sortBy="#{persona.apat}"
+                          filterBy="#{persona.apat}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+
+                            <p:outputLabel value="#{persona.apat}" />
+
+                </p:column>
+                 <p:column headerText="APELLIDOMAT"
+                           sortBy="#{persona.amat}"
+                                  filterBy="#{persona.amat}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+
+                            <p:outputLabel value="#{persona.amat}" />
+
+                </p:column>
+                  <p:column headerText="PUESTO"
+                            sortBy="#{persona.puesto}"
+                            filterBy="#{persona.puesto}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+
+                      <p:outputLabel value="#{persona.puesto}" />
+
+                </p:column>
+                 <p:column headerText="CENTRO DE TRABAJO"
+                           sortBy="#{persona.centro.lugar}"
+                            filterBy="#{persona.centro.lugar}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+
+                      <p:outputLabel value="#{persona.centro.lugar}" />
+
+                </p:column>
+                 <p:column headerText="TELÉFONO"
+                           sortBy="#{persona.telefono}"
+                            filterBy="#{persona.telefono}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+
+                      <p:outputLabel value="#{persona.telefono}" />
+
+                </p:column>
+                  <p:column headerText="CORREO ELECTRÓNICO"
+                            sortBy="#{persona.correoElectronico}"
+                            filterBy="#{persona.correoElectronico}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+
+                      <p:outputLabel value="#{persona.correoElectronico}" />
+
+                </p:column>
+                 
+                  <p:column headerText="ESTATUS"
+                            sortBy="#{persona.estatus}"
+                          filterBy="#{persona.estatus}"
+                          filterMatchMode="equals" width="55">
+                    
+                    <f:facet name="filter">
+                                <p:selectOneButton onchange="PF('buscar').filter()" style="font-size: 12px ">
+                                  <f:converter converterId="javax.faces.Boolean" />
+                                      <f:selectItem itemLabel="Todos" itemValue="" />
+                                      <f:selectItem itemLabel="Act." itemValue="true" />
+                                      <f:selectItem itemLabel="Inac." itemValue="false" />
+                                </p:selectOneButton>
+                    </f:facet>
+                    
+                    
+                    
+                    <p:outputLabel value="#{persona.estatus}"  >
+                        <f:converter converterId="conversionEstatus" />
+                    </p:outputLabel>
+                </p:column>
+                
+                
+                <p:column headerText="MODIFICAR"
+                          width="15">
+                    <center>
+                        <p:commandButton process="data" icon="fa-pencil" actionListener="#{personalBEAN.elegirDatoPersonal(persona)}" oncomplete="PF('DatosUsuario').show();" update=":dialogoUsuario"/>
+                    </center>
+                </p:column>
+                
+                <p:column headerText="CAMBIAR ESTADO"
+                          width="15">
+                    <center>
+                        <p:commandButton process="data" icon="fa-refresh" actionListener="#{personalBEAN.bajaPersona(persona)}" update="data"/>
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+     <p:dialog header="REGISTRO NUEVO USUARIO" widgetVar="DatosUsuario" id="dialogoUsuario" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1200">
+                   <div class="container text-center" style="margin-top: 2em">
+                    <h:form id="formDialogo">
+                            <p:growl id="mensajito" widgetVar="growlWV" autoUpdate="true" life="3000" /> 
+                            <f:event type="preRenderView" listener="#{centro_trabajoBEAN.listarCentro()}"/>
+                <p:wizard backLabel="Atras" nextLabel="Siguiente">
+                     <p:tab id="personal" title="Personal" >
+                         <p:panel header="Datos Personales" style="font-size:18px" >
+                            
+                             <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="500">
+                                 <p:column><br/> </p:column>
+                                <h:outputText value="Nombre de Persona:" style="color: black;font-size:14px"/>
+                                <p:inputText value="#{personalBEAN.personal.nombre}" 
+                              required="true" requiredMessage="Se requiere nombre de Persona" 
+                              style="text-transform: uppercase;width:250px" >
+                    
+                                </p:inputText>
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                <h:outputText value="Apellido Paterno:" style="color: black;font-size:14px"/>
+                                <p:inputText value="#{personalBEAN.personal.apat}" 
+                              required="true" requiredMessage="Se requiere apellido Paterno" 
+                              style="text-transform: uppercase;width:250px" >
+                    
+                                </p:inputText>
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                <h:outputText value="Apellido Materno:" style="color: black;font-size:14px"/>
+                                <p:inputText value="#{personalBEAN.personal.amat}" 
+                              required="true" requiredMessage="Se requiere apellido Materno" 
+                              style="text-transform: uppercase;width:250px" >
+                    
+                                </p:inputText>
+                                
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                <h:outputText value="Teléfono:" style="color: black;font-size:14px"/>
+                                <p:inputText value="#{personalBEAN.personal.telefono}" 
+                              required="true" requiredMessage="Se requiere apellido Teléfono" 
+                              style="text-transform: uppercase;width:250px" >
+                    
+                                </p:inputText>
+                                
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                  <h:outputText value="Correo:" style="color: black;font-size:14px"/>
+                                  <p:inputText value="#{personalBEAN.personal.correoElectronico}" 
+                              required="true" requiredMessage="Se requiere apellido Correo" 
+                               >
+                    
+                                </p:inputText>
+                               <p:column><br/> </p:column>
+                               
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+                        <p/>
+                        <p:tab id="trabajo" title="Trabajo"> 
+                <p:panel header="Sobre su Trabajo" style="font-size:18px"  >
+                    <p:messages />
+                         <h:panelGrid id="trabajoF" columns="3" columnClasses="grid,grid" class="container-fluid  text-justify">
+                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="500">
+                           
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                 <h:outputText value="Clave:" style="color: black;font-size:14px"/>
+                                 <p:inputText value="#{personalBEAN.personal.clave}" 
+                              required="true" requiredMessage="Se requiere Clave" 
+                              style="text-transform: uppercase;width:250px" >
+                    
+                                </p:inputText>
+                                
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                 <h:outputText value="Puesto:" style="color: black;font-size:14px"/>
+                                 <p:inputText value="#{personalBEAN.personal.puesto}" 
+                              required="true" requiredMessage="Se requiere Puesto" 
+                              style="text-transform: uppercase;width:250px" >
+                    
+                                </p:inputText>
+                                
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                <h:outputText value="Centro de Trabajo:" style="color: black;font-size:14px"/>
+                                <p:selectOneMenu value="#{personalBEAN.personal.centro}" converter="omnifaces.SelectItemsConverter" 
+                                                 styleClass="selectMenu" required="true" requiredMessage="Se Requiere Centro"
+                                                 style="text-transform: uppercase; height:30px; width:250px">
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{centro_trabajoBEAN.listacentro}" var="centroitem" itemLabel="#{centroitem.lugar}" itemValue="#{centroitem}"/>
+                                </p:selectOneMenu> 
+                                  <p:column><br/> </p:column><p:column><br/> </p:column>
+                               <p:outputLabel value="Estatus:" style="color: black;font-size:14px"/>
+                               <p:selectOneMenu value="#{personalBEAN.personal.estatus}" styleClass="selectMenu" label="TipoEstatus" style="height:30px;width:350px">
+                                 <f:selectItem itemLabel="ACTIVO" itemValue="true"/>
+                                 <f:selectItem itemLabel="INACTIVO" itemValue="false"/>
+                                </p:selectOneMenu>
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
+                                
+                                </h:panelGrid>
+                             </h:panelGrid>
+                        </p:panel>
+                  </p:tab>
+                
+                 
+                        <p:tab id="confirma" title="Confirmación">
+            <p:panel header="Confirmación" style="font-size:18px" >
+                <h:panelGrid id="confirmacion" columns="3" columnClasses="grid,grid,grid" class="container-fluid  text-justify">
+                    <h:panelGrid columns="2" columnClasses="label, value" width="300" >
+                     <h:outputText value="Nombre: " style="color: black;font-size:13px" />
+                     <h:outputText value="#{personalBEAN.personal.nombre}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                        <p:column><br/> </p:column><p:column><br/> </p:column>
+                        <h:outputText value="Apellido Paterno: " style="color: black;font-size:13px"/>
+                        <h:outputText value="#{personalBEAN.personal.apat}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                        <p:column><br/> </p:column><p:column><br/> </p:column>
+                        <h:outputText value="Apellido Materno: " style="color: black;font-size:13px"/>
+                        <h:outputText value="#{personalBEAN.personal.amat}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                        <h:outputText value="Teléfono: " style="color: black;font-size:13px"/>
+                        <h:outputText value="#{personalBEAN.personal.telefono}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                          <h:outputText value="Correo: " style="color: black;font-size:13px"/>
+                          <h:outputText value="#{personalBEAN.personal.correoElectronico}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                    
+                    </h:panelGrid>
+                  
+                    <h:panelGrid columns="2" columnClasses="label, value" width="400">
+                          <h:outputText value="Clave: " style="color: black;font-size:13px"/>
+                          <h:outputText value="#{personalBEAN.personal.clave}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                    
+                        <p:column><br/> </p:column><p:column><br/> </p:column>
+                           <h:outputText value="Puesto: " style="color: black;font-size:13px"/>
+                           <h:outputText value="#{personalBEAN.personal.puesto}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                    
+                        <p:column><br/> </p:column><p:column><br/> </p:column>
+                          <h:outputText value="Centro de Trabajo: " style="color: black;font-size:13px" />
+                          <h:outputText value="#{personalBEAN.personal.centro.lugar}" styleClass="outputLabel"
+                                        style="color: black;font-size:13px;text-transform: uppercase"/>
+                        <p:column><br/> </p:column><p:column><br/> </p:column>
+                          
+                        
+                        
+                        
+                      </h:panelGrid>
+                   
+                </h:panelGrid>  
+                 <div class="container text-center">
+                     <p:commandButton value="#{personalBEAN.accion}" actionListener="#{personalBEAN.operarPersonal()}" oncomplete="PF('DatosUsuario').hide();" update=":formaExterior"/>
+
+                        </div>
+            </p:panel>  
+                     </p:tab>
+                </p:wizard>
+                     <p:separator style="visibility: hidden;"/> 
+                     <p:commandLink value="Cerrar" immediate="true" oncomplete="PF('DatosUsuario').hide();"  style="float: left" />
+               
+                       
+                    </h:form>
+                   </div>
+                </p:dialog>
+                
             </ui:define>
 
         </ui:composition>

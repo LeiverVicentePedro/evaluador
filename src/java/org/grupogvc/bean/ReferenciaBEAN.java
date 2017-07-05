@@ -19,7 +19,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.grupogvc.dao.ReferenciaDAO;
 import org.grupogvc.modelo.Referencia;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 /**

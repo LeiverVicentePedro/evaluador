@@ -9,20 +9,16 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.commons.io.FilenameUtils;
 import org.grupogvc.dao.ReferenciaDAO;
 import org.grupogvc.modelo.Referencia;
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -32,6 +28,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @SessionScoped
+
 public class ReferenciaBEAN implements Serializable {
 
     //variables y objetos usados en la vista para las referencias
@@ -174,6 +171,7 @@ public class ReferenciaBEAN implements Serializable {
             System.out.println("Extencion del archivo: "+getExtension(referencia.getReferencia()));
         }catch(Exception ex){
             System.out.println("Error "+ex);
+            throw ex;
         }
        
     }

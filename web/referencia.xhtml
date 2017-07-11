@@ -11,7 +11,7 @@
         <ui:composition template="./WEB-INF/template/plantilla.xhtml">
 
             <ui:define name="content">
-                <h:form>
+                <h:form  enctype="multipart/form-data">
                     <p:growl id="mensaje" autoUpdate="true"/>
 
                     <f:event type="preRenderView" listener="#{referenciaBEAN.listarTodasReferencias()}"/>
@@ -50,7 +50,7 @@
                         <p:column headerText="Norma" sortBy="#{referencia.idCategoria.tipo}" 
                                   filterBy="#{referencia.idCategoria.tipo}"
                                   filterMatchMode="startsWith"
-                                  filterStyle="visibility:hidden; height:0" width="180">
+                                  filterStyle="visibility:hidden; height:0">
 
                             <p:outputLabel value="#{referencia.idCategoria.tipo}"/>
                         </p:column>
@@ -61,11 +61,8 @@
 
                             <p:outputLabel value="#{referencia.descripcion}"/>
                         </p:column>
-                        <p:column headerText="Visualizar" style="text-align: center;" width="60">
-                            <p:commandButton icon="fa fa-eye"/>
-                        </p:column>
-                        <p:column headerText="Descarga" style="text-align: center;" width="60">
-                            <p:commandButton icon="fa fa-download"/>
+                        <p:column headerText="Descarga" style="text-align: center;">
+                            <p:commandButton process="tablaReferencias" icon="fa fa-download" actionListener="#{referenciaBEAN.descargarArchivo(referencia)}"/>
                         </p:column>
                     </p:dataTable>
 

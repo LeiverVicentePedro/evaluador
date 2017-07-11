@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package org.grupogvc.modelo;
-
+import java.io.Serializable;
 /**
  *
  * @author leiver
  */
-public class Referencia {
+public class Referencia implements Serializable{
     //objetos que se hacen referencia a la tabla Referencia en la base de datos
     private int idReferencia;
     private String descripcion;
@@ -74,6 +74,4 @@ public class Referencia {
         return true;
     }
     
-    
-   
 }

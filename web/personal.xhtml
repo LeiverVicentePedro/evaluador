@@ -21,7 +21,7 @@
             <p:separator style="visibility: hidden;"/> 
             <div align="justify">
                 <p:commandButton value="Nuevo" oncomplete="PF('DatosUsuario').show();" actionListener="#{personalBEAN.setAccion('Registrar')}" 
-                              update=":dialogoUsuario" >         
+                                 update=":dialogoUsuario" class="boton" >         
             
                     <f:ajax execute="#{personalBEAN.listarPersona()}" render="data" />
             </p:commandButton>
@@ -58,7 +58,7 @@
                           filterBy="#{persona.clave}"
                           filterMatchMode="startsWith"
                           filterStyle="visibility:hidden; height:0"
-                          style="text-transform: uppercase" width="35">
+                          style="text-transform: uppercase" width="15">
                     
                     <h:outputText value="#{persona.clave}" />
                    
@@ -68,7 +68,7 @@
                                   filterBy="#{persona.nombre}"
                                   filterMatchMode="startsWith"
                                   filterStyle="visibility:hidden; height:0"
-                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+                                  style=" font-size: 13px;text-transform: uppercase " width="35">
 
                             <p:outputLabel value="#{persona.nombre}" />
 
@@ -79,7 +79,7 @@
                           filterBy="#{persona.apat}"
                                   filterMatchMode="startsWith"
                                   filterStyle="visibility:hidden; height:0"
-                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+                                  style=" font-size: 13px;text-transform: uppercase " width="35">
 
                             <p:outputLabel value="#{persona.apat}" />
 
@@ -89,7 +89,7 @@
                                   filterBy="#{persona.amat}"
                                   filterMatchMode="startsWith"
                                   filterStyle="visibility:hidden; height:0"
-                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+                                  style=" font-size: 13px;text-transform: uppercase " width="35">
 
                             <p:outputLabel value="#{persona.amat}" />
 
@@ -119,38 +119,19 @@
                             filterBy="#{persona.telefono}"
                                   filterMatchMode="startsWith"
                                   filterStyle="visibility:hidden; height:0"
-                                  style=" font-size: 13px;text-transform: uppercase " width="45">
+                                  style=" font-size: 13px;text-transform: uppercase " width="40">
 
                       <p:outputLabel value="#{persona.telefono}" />
-
-                </p:column>
-                  <p:column headerText="CORREO ELECTRÓNICO"
-                            sortBy="#{persona.correoElectronico}"
-                            filterBy="#{persona.correoElectronico}"
-                                  filterMatchMode="startsWith"
-                                  filterStyle="visibility:hidden; height:0"
-                                  style=" font-size: 13px;text-transform: uppercase " width="45">
-
-                      <p:outputLabel value="#{persona.correoElectronico}" />
 
                 </p:column>
                  
                   <p:column headerText="ESTATUS"
                             sortBy="#{persona.estatus}"
                           filterBy="#{persona.estatus}"
-                          filterMatchMode="equals" width="55">
-                    
-                    <f:facet name="filter">
-                                <p:selectOneButton onchange="PF('buscar').filter()" style="font-size: 12px ">
-                                  <f:converter converterId="javax.faces.Boolean" />
-                                      <f:selectItem itemLabel="Todos" itemValue="" />
-                                      <f:selectItem itemLabel="Act." itemValue="true" />
-                                      <f:selectItem itemLabel="Inac." itemValue="false" />
-                                </p:selectOneButton>
-                    </f:facet>
-                    
-                    
-                    
+                          filterMatchMode="startsWith"
+                          filterStyle="visibility:hidden; height:0"                              
+                            style=" font-size: 13px;text-transform: uppercase " width="35">
+                          
                     <p:outputLabel value="#{persona.estatus}"  >
                         <f:converter converterId="conversionEstatus" />
                     </p:outputLabel>
@@ -158,22 +139,22 @@
                 
                 
                 <p:column headerText="MODIFICAR"
-                          width="15">
+                          width="30">
                     <center>
-                        <p:commandButton process="data" icon="fa-pencil" actionListener="#{personalBEAN.elegirDatoPersonal(persona)}" oncomplete="PF('DatosUsuario').show();" update=":dialogoUsuario"/>
+                        <p:commandButton process="data" icon="fa fa-pencil" actionListener="#{personalBEAN.elegirDatoPersonal(persona)}" oncomplete="PF('DatosUsuario').show();" update=":dialogoUsuario"/>
                     </center>
                 </p:column>
                 
                 <p:column headerText="CAMBIAR ESTADO"
-                          width="15">
+                          width="23">
                     <center>
-                        <p:commandButton process="data" icon="fa-refresh" actionListener="#{personalBEAN.bajaPersona(persona)}" update="data"/>
+                        <p:commandButton process="data" icon="fa fa-refresh" actionListener="#{personalBEAN.bajaPersona(persona)}" update="data"/>
                     </center>
                 </p:column>
             </p:dataTable>
         </h:form>
         
-     <p:dialog header="REGISTRO NUEVO USUARIO" widgetVar="DatosUsuario" id="dialogoUsuario" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1200">
+     <p:dialog header="DATOS DEL PERSONAL" widgetVar="DatosUsuario" id="dialogoUsuario" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1200">
                    <div class="container text-center" style="margin-top: 2em">
                     <h:form id="formDialogo">
                             <p:growl id="mensajito" widgetVar="growlWV" autoUpdate="true" life="3000" /> 
@@ -183,7 +164,7 @@
                          <p:panel header="Datos Personales" style="font-size:18px" >
                             
                              <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="500">
-                                 <p:column><br/> </p:column>
+                                <p:column><br/> </p:column><p:column><br/> </p:column> 
                                 <h:outputText value="Nombre de Persona:" style="color: black;font-size:14px"/>
                                 <p:inputText value="#{personalBEAN.personal.nombre}" 
                               required="true" requiredMessage="Se requiere nombre de Persona" 
@@ -258,7 +239,7 @@
                                 </p:selectOneMenu> 
                                   <p:column><br/> </p:column><p:column><br/> </p:column>
                                <p:outputLabel value="Estatus:" style="color: black;font-size:14px"/>
-                               <p:selectOneMenu value="#{personalBEAN.personal.estatus}" styleClass="selectMenu" label="TipoEstatus" style="height:30px;width:350px">
+                               <p:selectOneMenu value="#{personalBEAN.personal.estatus}" styleClass="selectMenu" label="TipoEstatus" style="height:30px;width:200px">
                                  <f:selectItem itemLabel="ACTIVO" itemValue="true"/>
                                  <f:selectItem itemLabel="INACTIVO" itemValue="false"/>
                                 </p:selectOneMenu>
@@ -273,7 +254,7 @@
                         <p:tab id="confirma" title="Confirmación">
             <p:panel header="Confirmación" style="font-size:18px" >
                 <h:panelGrid id="confirmacion" columns="3" columnClasses="grid,grid,grid" class="container-fluid  text-justify">
-                    <h:panelGrid columns="2" columnClasses="label, value" width="300" >
+                    <h:panelGrid columns="2" columnClasses="label, value" width="400" >
                      <h:outputText value="Nombre: " style="color: black;font-size:13px" />
                      <h:outputText value="#{personalBEAN.personal.nombre}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
                         <p:column><br/> </p:column><p:column><br/> </p:column>
@@ -285,9 +266,10 @@
                         <h:outputText value="Teléfono: " style="color: black;font-size:13px"/>
                         <h:outputText value="#{personalBEAN.personal.telefono}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
                           <h:outputText value="Correo: " style="color: black;font-size:13px"/>
-                          <h:outputText value="#{personalBEAN.personal.correoElectronico}" styleClass="outputLabel" style="color: black;font-size:13px;text-transform: uppercase"/>
+                          <h:outputText value="#{personalBEAN.personal.correoElectronico}" styleClass="outputLabel" style="color: black;font-size:13px"/>
                     
                     </h:panelGrid>
+                    
                   
                     <h:panelGrid columns="2" columnClasses="label, value" width="400">
                           <h:outputText value="Clave: " style="color: black;font-size:13px"/>

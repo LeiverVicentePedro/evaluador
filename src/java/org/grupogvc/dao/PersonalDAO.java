@@ -135,7 +135,40 @@ public class PersonalDAO extends Conexion{
         finally{
            this.Cerrar();
         }
-    }  
+    }
+     
+     public Personal buscarIdPersona(int idpersonal) throws Exception{
+        Personal personabusca= new Personal();
+        ResultSet resultadosetbusca;
+      try{
+            this.Conectar();
+            PreparedStatement consulta= this.getConexion().prepareCall("SELECT * FROM personal WHERE idpersonal=?");
+            consulta.setInt(1,idpersonal);
+            resultadosetbusca=consulta.executeQuery();
+            if(resultadosetbusca.next()){
+            personabusca.setIdpersonal(resultadosetbusca.getInt("idpersonal"));
+             personabusca.setClave(resultadosetbusca.getString("clave"));
+             personabusca.setNombre(resultadosetbusca.getString("nombre"));
+             personabusca.setApat(resultadosetbusca.getString("apat"));
+             personabusca.setAmat(resultadosetbusca.getString("amat"));
+             personabusca.setPuesto(resultadosetbusca.getString("puesto"));
+             personabusca.setCentro(new Centro_trabajoDAO().buscarIdCentro((resultadosetbusca.getInt("idcent_trab"))));
+             personabusca.setTelefono(resultadosetbusca.getString("telefono"));
+             personabusca.setCorreoElectronico(resultadosetbusca.getString("correoElectronico"));
+             personabusca.setEstatus(resultadosetbusca.getBoolean("estatus"));
+            }
+            resultadosetbusca.close();
+            
+        }
+        catch(Exception e){
+            System.out.println("error en PersonaDAO->buscarIdPersona "+e);
+           throw e; 
+        }
+        finally{
+           this.Cerrar();
+        }  
+        return personabusca;
+    }
      
     
 }

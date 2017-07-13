@@ -19,6 +19,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.grupogvc.dao.ReferenciaDAO;
 import org.grupogvc.modelo.Referencia;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -27,30 +28,34 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @SessionScoped
-public class ReferenciaBEAN implements Serializable{
-    
+
+public class ReferenciaBEAN implements Serializable {
+
     //variables y objetos usados en la vista para las referencias
     private Referencia referencia = new Referencia();
     private List<Referencia> listaReferencia = new ArrayList();
-    
+
     //objeto para las selecciones
     private Referencia referenciaSeleccionada = new Referencia();
-    
+
     //lista para los filtros
     private List<Referencia> filtroReferencia = new ArrayList();
-    
+
     //objeto de la Referencia DAO para poder acceder a los datos
     private ReferenciaDAO referenciaDao = new ReferenciaDAO();
-    
+
     //varialbe para establecer accion de boton en el dialog de la vista
     private String accion;
-    
+
     //variable que tiene la ruta raiz de donde se guardaran los archivos de las referencias
-    String rutaDirectorio="C:\\servidorgvc\\";
-    
+    String rutaDirectorio = "C:\\servidorgvc\\";
+
     //esta variable es unsada para guardar el contenido del archivo para subir
     private UploadedFile archivo;
-    
+
+    //varialbe Streamed para guardar el archivo para descargar
+    private StreamedContent archivoDescarga;
+
     //getter y setter para cada varialbe y objeto utilizado en la vista
     public Referencia getReferencia() {
         return referencia;
@@ -99,60 +104,84 @@ public class ReferenciaBEAN implements Serializable{
     public void setArchivo(UploadedFile archivo) {
         this.archivo = archivo;
     }
-    
-    
-    
+
+    public StreamedContent getArchivoDescarga() {
+        return archivoDescarga;
+    }
+
     //metodo utilizado para agregar una referencia
-    public void agregarReferencia(){
-        try{
+    public void agregarReferencia() {
+        try {
             referenciaDao.insertarReferencia(referencia);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Registro Exitoso!.");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
-        }catch(Exception ex){
-         System.out.println("Error en ReferenciaBEAN -> agregarReferencia: "+ex);   
+        } catch (Exception ex) {
+            System.out.println("Error en ReferenciaBEAN -> agregarReferencia: " + ex);
         }
     }
-    
+
     //metodo para listar los elementos existentes como referencias
-    public void listarTodasReferencias(){
-        try{
+    public void listarTodasReferencias() {
+        try {
             listaReferencia = referenciaDao.listarReferencia();
-        }catch(Exception ex){
-            System.out.println("Error en ReferenciaBEAN -> listarTodasReferencias: "+ex);
+        } catch (Exception ex) {
+            System.out.println("Error en ReferenciaBEAN -> listarTodasReferencias: " + ex);
         }
     }
-    
-    public void guardarArchivo()throws IOException{
-        try{
-            String rutaDirectorio = this.rutaDirectorio+referencia.getIdCategoria().getTipo();
+
+    public void guardarArchivo() throws IOException {
+        try {
+            String rutaDirectorio = this.rutaDirectorio + referencia.getIdCategoria().getTipo();
             File directorio = new File(rutaDirectorio);
-            if(!directorio.exists()){
-                System.out.println("Ruta que no existe: "+directorio);
-               directorio.mkdirs();
-               UploadedFile subirArchivo=getArchivo();
-               byte[] bytes=null;
-               if (null!=subirArchivo) {
-                bytes = subirArchivo.getContents();
-                String archivoNombre = FilenameUtils.getName(subirArchivo.getFileName());
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(rutaDirectorio+"\\"+archivoNombre)));
-                stream.write(bytes);
-                stream.close();
+            if (!directorio.exists()) {
+                System.out.println("Ruta que no existe: " + directorio);
+                directorio.mkdirs();
+                UploadedFile subirArchivo = getArchivo();
+                byte[] bytes = null;
+                if (null != subirArchivo) {
+                    bytes = subirArchivo.getContents();
+                    String archivoNombre = FilenameUtils.getName(subirArchivo.getFileName());
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(rutaDirectorio + "\\" + archivoNombre)));
+                    stream.write(bytes);
+                    stream.close();
+                    referencia.setReferencia(rutaDirectorio + "\\" + archivoNombre);
+                    referenciaDao.insertarReferencia(referencia);
+                }
+            } else {
+                System.out.println("Ruta que existe: " + directorio);
+                UploadedFile subirArchivo = getArchivo();
+                byte[] bytes = null;
+                if (null != subirArchivo) {
+                    bytes = subirArchivo.getContents();
+                    String archivoNombre = FilenameUtils.getName(subirArchivo.getFileName());
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(rutaDirectorio + "\\" + archivoNombre)));
+                    stream.write(bytes);
+                    stream.close();
+                    referencia.setReferencia(rutaDirectorio + "\\" + archivoNombre);
+                    referenciaDao.insertarReferencia(referencia);
+                }
             }
-            }else{
-                System.out.println("Ruta que existe: "+directorio);
-                 UploadedFile subirArchivo=getArchivo();
-               byte[] bytes=null;
-               if (null!=subirArchivo) {
-                bytes = subirArchivo.getContents();
-                String archivoNombre = FilenameUtils.getName(subirArchivo.getFileName());
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(rutaDirectorio+"\\"+archivoNombre)));
-                stream.write(bytes);
-                stream.close();
-               }
-            }
-        }catch(Exception ex){
-            System.out.println("Error en ReferenciaBEAN -> guardarArchivo: "+ex);
+        } catch (Exception ex) {
+            System.out.println("Error en ReferenciaBEAN -> guardarArchivo: " + ex);
         }
-    }  
-    
+    }
+
+    public void bajarArchivo(Referencia referencia){
+        try{
+            System.out.println("Extencion del archivo: ");
+        }catch(Exception ex){
+            System.out.println("Error "+ex);
+            throw ex;
+        }
+       
+    }
+
+    public String getExtension(String archivo) {
+        int index = archivo.lastIndexOf('.');
+        if (index == -1) {
+            return "";
+        } else {
+            return archivo.substring(index + 1);
+        }
+    }
 }

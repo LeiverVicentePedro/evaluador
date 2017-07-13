@@ -11,7 +11,7 @@
         <ui:composition template="./WEB-INF/template/plantilla.xhtml">
 
             <ui:define name="content">
-                <h:form  enctype="multipart/form-data">
+                <h:form id="formaExterior">
                     <p:growl id="mensaje" autoUpdate="true"/>
 
                     <f:event type="preRenderView" listener="#{referenciaBEAN.listarTodasReferencias()}"/>
@@ -62,7 +62,7 @@
                             <p:outputLabel value="#{referencia.descripcion}"/>
                         </p:column>
                         <p:column headerText="Descarga" style="text-align: center;">
-                            <p:commandButton process="tablaReferencias" icon="fa fa-download" actionListener="#{referenciaBEAN.descargarArchivo(referencia)}"/>
+                            <p:commandButton icon="fa fa-download" actionListener="#{referenciaBEAN.bajarArchivo(referencia)}"/>
                         </p:column>
                     </p:dataTable>
 

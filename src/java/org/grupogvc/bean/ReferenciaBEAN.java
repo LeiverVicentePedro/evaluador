@@ -166,9 +166,9 @@ public class ReferenciaBEAN implements Serializable {
         }
     }
 
-    public void bajarArchivo(Referencia referencia)throws Exception {
+    public void bajarArchivo(Referencia referencia){
         try{
-            System.out.println("Extencion del archivo: "+getExtension(referencia.getReferencia()));
+            System.out.println("Extencion del archivo: ");
         }catch(Exception ex){
             System.out.println("Error "+ex);
             throw ex;
@@ -176,7 +176,7 @@ public class ReferenciaBEAN implements Serializable {
        
     }
 
-    public static String getExtension(String archivo) {
+    public String getExtension(String archivo) {
         int index = archivo.lastIndexOf('.');
         if (index == -1) {
             return "";

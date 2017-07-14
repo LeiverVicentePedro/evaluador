@@ -60,15 +60,24 @@
                                   filterStyle="visibility:hidden; height:0" >
 
                             <p:outputLabel value="#{referencia.descripcion}"/>
+                            
                         </p:column>
-                        <p:column headerText="Descarga" style="text-align: center;">
-                            <p:commandButton icon="fa fa-download" actionListener="#{referenciaBEAN.bajarArchivo(referencia)}"/>
+                        <p:column headerText="Descargar">
+                            <p:commandButton icon="fa fa-refresh" oncomplete="PF('Descargar').show();"/>
                         </p:column>
+                       
                     </p:dataTable>
 
                     <p:separator style="visibility: hidden;"/>
                 </h:form>
-
+                <p:dialog id="dialogoDescarga" header="Descargar" widgetVar="Descargar" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form >
+                       
+                        <p:commandButton  value="Descargar" action="#{referenciaBEAN.bajaArchivo(referencia)}" />
+                            <p:commandButton  value="Cancelar" immediate="true" oncomplete="PF('Descargar').hide();" />
+                       
+                    </h:form>
+                </p:dialog>
                 <p:dialog id="dialogoReferencia" header="Datos de la Referencia" widgetVar="Referencia" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <h:form enctype="multipart/form-data">
                         <h:panelGrid columns="2">

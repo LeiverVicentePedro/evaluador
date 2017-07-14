@@ -166,14 +166,12 @@ public class ReferenciaBEAN implements Serializable {
         }
     }
 
-    public void bajarArchivo(Referencia referencia){
-        try{
-            System.out.println("Extencion del archivo: ");
-        }catch(Exception ex){
-            System.out.println("Error "+ex);
-            throw ex;
-        }
-       
+   public void bajaArchivo(Referencia refe) throws Exception {
+
+      
+        
+            System.out.println("Porfin Piocho Encontre otra forma ");
+        
     }
 
     public String getExtension(String archivo) {

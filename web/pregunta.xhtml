@@ -58,7 +58,7 @@
                           filterBy="#{pregunta.categoria.tipo}"
                           filterMatchMode="startsWith"
                           filterStyle="visibility:hidden; height:0"
-                          style="text-transform: uppercase" width="15">
+                          style="text-transform: uppercase" width="1">
                     
                     <h:outputText value="#{pregunta.categoria.tipo}" />
                    
@@ -68,23 +68,56 @@
                                   filterBy="#{pregunta.pregunta}"
                                   filterMatchMode="startsWith"
                                   filterStyle="visibility:hidden; height:0"
-                                  style=" font-size: 13px;text-transform: uppercase " width="35">
+                                  style=" font-size: 13px;text-transform: uppercase " width="95">
+                              <p:inputTextarea value="#{pregunta.pregunta}" rows="5" cols="120" style="text-align: justify;" readonly="true"  />
 
-                            <p:outputLabel value="#{pregunta.pregunta}" />
 
                         </p:column>
                 
                 
                 <p:column headerText="MODIFICAR"
-                          width="30">
+                          width="10">
                     <center>
-                        <p:commandButton process="data" icon="fa fa-pencil" actionListener="#{personalBEAN.elegirDatoPersonal(persona)}" oncomplete="PF('DatosPregunta').show();" update=":dialogoPregunta"/>
+                        <p:commandButton process="data" icon="fa fa-pencil" actionListener="#{preguntaBEAN.elegirDatoPregunta(pregunta)}" oncomplete="PF('DatosPregunta').show();" update=":dialogoPregunta"/>
                     </center>
                 </p:column>
                 
                
             </p:dataTable>
         </h:form>
+                  <p:dialog header="Pregunta" widgetVar="DatosPregunta" id="dialogoPregunta" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="600">
+                   <div class="container text-center" style="margin-top: 2em">
+                    <h:form id="formDialogo">
+                            <p:growl id="mensajito" widgetVar="growlWV" autoUpdate="true" life="500" /> 
+                            <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/>
+                            <p/>
+                        <h:panelGrid id="trabajoF" columns="1" columnClasses="grid" class="container-fluid  text-justify">
+                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="00">
+                                 <h:outputText value="Nombre de Categoria:" style="color: black; font-size:14px"/>
+                                <p:selectOneMenu value="#{preguntaBEAN.pregunta.categoria}" converter="omnifaces.SelectItemsConverter" 
+                                                 styleClass="selectMenu" required="true" requiredMessage="Se Requiere Categoria"
+                                                 style="text-transform: uppercase; height:30px; width:250px">
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{categoriaBEAN.listaCategoria}" var="cateitem" itemLabel="#{cateitem.tipo}" itemValue="#{cateitem}"/>
+                                </p:selectOneMenu> 
+                                <br/><p:column/>
+                                   <h:outputText value="Pregunta:" style="color: black;font-size:14px" />
+                                 <p:inputTextarea value="#{preguntaBEAN.pregunta.pregunta}" rows="30" cols="550"
+                                                  style="text-align: justify;"   required="true" requiredMessage="Se requiere Pregunta" 
+                                             />
+                                  <br/><p:column/>
+
+                            </h:panelGrid>
+                        </h:panelGrid>
+                            <p/>
+                        <center>
+                            <p:commandButton value="#{preguntaBEAN.accion}" actionListener="#{preguntaBEAN.operarPregunta()}" oncomplete="PF('DatosPregunta').hide();" update=":formaExterior"/>
+
+                            <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('DatosPregunta').hide();" action="#{preguntaBEAN.limpiarPregunta()}" />
+                        </center>
+                    </h:form>
+                   </div>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

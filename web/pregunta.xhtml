@@ -92,7 +92,7 @@
                             <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/>
                             <p/>
                         <h:panelGrid id="trabajoF" columns="1" columnClasses="grid" class="container-fluid  text-justify">
-                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="00">
+                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="500">
                                  <h:outputText value="Nombre de Categoria:" style="color: black; font-size:14px"/>
                                 <p:selectOneMenu value="#{preguntaBEAN.pregunta.categoria}" converter="omnifaces.SelectItemsConverter" 
                                                  styleClass="selectMenu" required="true" requiredMessage="Se Requiere Categoria"
@@ -102,8 +102,8 @@
                                 </p:selectOneMenu> 
                                 <br/><p:column/>
                                    <h:outputText value="Pregunta:" style="color: black;font-size:14px" />
-                                 <p:inputTextarea value="#{preguntaBEAN.pregunta.pregunta}" rows="30" cols="550"
-                                                  style="text-align: justify;"   required="true" requiredMessage="Se requiere Pregunta" 
+                                 <p:inputTextarea value="#{preguntaBEAN.pregunta.pregunta}" rows="25" cols="70"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Pregunta" 
                                              />
                                   <br/><p:column/>
 

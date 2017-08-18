@@ -85,14 +85,14 @@
                
             </p:dataTable>
         </h:form>
-                  <p:dialog header="Pregunta" widgetVar="DatosPregunta" id="dialogoPregunta" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="600">
+                  <p:dialog header="Pregunta" widgetVar="DatosPregunta" id="dialogoPregunta" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="800">
                    <div class="container text-center" style="margin-top: 2em">
                     <h:form id="formDialogo">
                             <p:growl id="mensajito" widgetVar="growlWV" autoUpdate="true" life="500" /> 
                             <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/>
                             <p/>
                         <h:panelGrid id="trabajoF" columns="1" columnClasses="grid" class="container-fluid  text-justify">
-                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="500">
+                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="700">
                                  <h:outputText value="Nombre de Categoria:" style="color: black; font-size:14px"/>
                                 <p:selectOneMenu value="#{preguntaBEAN.pregunta.categoria}" converter="omnifaces.SelectItemsConverter" 
                                                  styleClass="selectMenu" required="true" requiredMessage="Se Requiere Categoria"
@@ -102,8 +102,24 @@
                                 </p:selectOneMenu> 
                                 <br/><p:column/>
                                    <h:outputText value="Pregunta:" style="color: black;font-size:14px" />
-                                 <p:inputTextarea value="#{preguntaBEAN.pregunta.pregunta}" rows="25" cols="70"
+                                 <p:inputTextarea value="#{preguntaBEAN.pregunta.pregunta}" rows="5" cols="90"
                                                   style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Pregunta" 
+                                             />
+                                 <br/><p:column/>
+                                  
+                                  <h:outputText value="Correcto:" style="color: black;font-size:14px" />
+                                  <p:inputTextarea value="#{preguntaBEAN.respuesta.correcto}" rows="3" cols="90"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Respuesta Correcta" 
+                                             />
+                                  <br/><p:column/>
+                                  <h:outputText value="Incorrecta 1:" style="color: black;font-size:14px" />
+                                  <p:inputTextarea value="#{preguntaBEAN.respuesta.incorrecto1}" rows="3" cols="90"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Respuesta Incorrecta1" 
+                                             />
+                                  <br/><p:column/>
+                                  <h:outputText value="Incorrecta 2:" style="color: black;font-size:14px" />
+                                  <p:inputTextarea value="#{preguntaBEAN.respuesta.incorrecto2}" rows="3" cols="90"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Respuesta Incorrecta2" 
                                              />
                                   <br/><p:column/>
 

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import org.grupogvc.conexion.Conexion;
+import org.grupogvc.modelo.Pregunta;
 import org.grupogvc.modelo.Respuesta;
 
 /**
@@ -30,7 +31,7 @@ public class RespuestaDAO extends Conexion{
             consulta.executeUpdate();
         }
         catch(Exception e){
-        System.out.println("error en Respuesta DAO -->Registrar Respuesta"+"/n");
+        System.out.println("error en Respuesta DAO -->Registrar Respuesta"+"\n");
         throw e;
        // System.out.println("error en DAO"); 
         }
@@ -142,6 +143,31 @@ public class RespuestaDAO extends Conexion{
            this.Cerrar();
         }  
         return respuestabusca;
-    }
-    
+    }   
+     ///esta es la que estoy usando actualmente para registrar pregunta y respuesta lo puse como prueba 
+     public Respuesta buscarPregunta(Pregunta pregunta) throws Exception{
+        Respuesta respuestabusca= new Respuesta();
+        ResultSet resultadosetbusca;
+      try{
+            this.Conectar();
+            PreparedStatement consulta= this.getConexion().prepareCall("SELECT * FROM respuesta WHERE idrespuesta=?");
+                consulta.setInt(1,pregunta.getIdpregunta());
+            resultadosetbusca=consulta.executeQuery();
+            if(resultadosetbusca.next()){
+           respuestabusca.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadosetbusca.getInt("idpregunta"))));
+              respuestabusca.setCorrecto(resultadosetbusca.getString("correcto"));
+              respuestabusca.setIncorrecto1(resultadosetbusca.getString("incorrecto1"));
+              respuestabusca.setIncorrecto2(resultadosetbusca.getString("incorrecto2")); }
+            resultadosetbusca.close();
+            
+        }
+        catch(Exception e){
+            System.out.println("error en PreguntaDAO->buscarIdPregunta "+e);
+           throw e; 
+        }
+        finally{
+           this.Cerrar();
+        }  
+        return respuestabusca;
+    }    
 }

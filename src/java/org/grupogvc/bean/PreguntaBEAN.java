@@ -10,7 +10,9 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.grupogvc.dao.PreguntaDAO;
+import org.grupogvc.dao.RespuestaDAO;
 import org.grupogvc.modelo.Pregunta;
+import org.grupogvc.modelo.Respuesta;
 
 /**
  *
@@ -21,9 +23,11 @@ import org.grupogvc.modelo.Pregunta;
 public class PreguntaBEAN implements Serializable{
     
     private Pregunta pregunta=new Pregunta();
+    Respuesta respuesta = new Respuesta();
     private List<Pregunta> listapregunta;
     private List<Pregunta> filterpregunta;
     private List<Pregunta> seleccionpregunta;
+    private List<Respuesta> listarespuesta;
     private String accion;
 
     public Pregunta getPregunta() {
@@ -33,6 +37,15 @@ public class PreguntaBEAN implements Serializable{
     public void setPregunta(Pregunta pregunta) {
         this.pregunta = pregunta;
     }
+
+    public Respuesta getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(Respuesta respuesta) {
+        this.respuesta = respuesta;
+    }
+    
 
     public List<Pregunta> getListapregunta() {
         return listapregunta;
@@ -66,6 +79,14 @@ public class PreguntaBEAN implements Serializable{
         this.accion = accion;
     }
 
+    public List<Respuesta> getListarespuesta() {
+        return listarespuesta;
+    }
+
+    public void setListarespuesta(List<Respuesta> listarespuesta) {
+        this.listarespuesta = listarespuesta;
+    }
+    
     
 
     
@@ -96,9 +117,20 @@ public class PreguntaBEAN implements Serializable{
     
     private void registrarPregunta() throws Exception{
         PreguntaDAO preguntadao;
+        RespuestaDAO respuestadao;
             try{
                 preguntadao= new PreguntaDAO();
+                respuestadao= new RespuestaDAO();
+                
                 preguntadao.registrarPregunta(pregunta);
+                
+                Pregunta preguntaTem=preguntadao.buscarIdPregunta(getPregunta().getIdpregunta());
+               
+               
+                respuesta.setRespuesta(preguntaTem);
+                respuestadao.registrarRespuesta(respuesta);
+
+            
                 this.listarPregunta();
         
             }

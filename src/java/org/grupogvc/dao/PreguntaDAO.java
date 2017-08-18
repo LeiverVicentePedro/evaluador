@@ -84,7 +84,7 @@ public class PreguntaDAO extends Conexion{
             }
         }
         catch(Exception e){
-            System.out.println("error en Pregunta DAO -->Elegir Pregunta"+"/n");
+            System.out.println("error en Pregunta DAO -->Elegir Pregunta"+"\n");
             throw e;
         }
         finally{

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                 <p:separator style="visibility: hidden;"/> 
+        <h:form id="formaExterior">        
+            <p:growl id="msj" showDetail="true" sticky="true" autoUpdate="true"/>
+            <center>
+                      <p:separator style="visibility: hidden;"/> 
+                   <p:outputLabel value="Listado de Preguntas" style="font-size: 25px;" />
+                    </center>
+            <p:separator style="visibility: hidden;"/> 
+            <div align="justify">
+                <p:commandButton value="Nuevo" oncomplete="PF('DatosPregunta').show();" actionListener="#{preguntaBEAN.setAccion('Registrar')}" 
+                                 update=":dialogoPregunta" class="boton" >         
+            
+                    <f:ajax execute="#{preguntaBEAN.listarPregunta()}" render="data" />
+            </p:commandButton>
+            </div>
+             <p:separator style="visibility: hidden;"/> 
+             <p:dataTable id="data" var="pregunta" value="#{preguntaBEAN.listapregunta}" 
+                         
+                          style="font-size: 14px;" selectionMode="multiple" selection="#{preguntaBEAN.seleccionpregunta}" rowKey="#{pregunta.idpregunta}"
+                                 liveResize="true"
+                                 
+                                 liveScroll="true" scrollRows="15" scrollWidth="100%"
+                                 scrollable="true"
+                                 
+                                 widgetVar="buscar"
+                                 filteredValue="#{preguntaBEAN.filterpregunta}"
+                          emptyMessage="No hay elementos encontrados"
+                          paginator="true" rows="10"
+                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                          paginatorPosition="bottom">
+                 
+                          <f:facet name="header">
+                              <div align="right" >
+                                <p:outputPanel class="text-right">
+                                   <h:outputText value="Buscar:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('buscar').filter();" 
+                                             
+                                             style="width:150px" />
+                                </p:outputPanel>
+                                  </div>
+                           </f:facet>
+                 
+                <p:column headerText="Categoria" 
+                          sortBy="#{pregunta.categoria.tipo}" 
+                          filterBy="#{pregunta.categoria.tipo}"
+                          filterMatchMode="startsWith"
+                          filterStyle="visibility:hidden; height:0"
+                          style="text-transform: uppercase" width="1">
+                    
+                    <h:outputText value="#{pregunta.categoria.tipo}" />
+                   
+                </p:column>
+                 <p:column headerText="Pregunta"
+                           sortBy="#{pregunta.pregunta}"
+                                  filterBy="#{pregunta.pregunta}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style=" font-size: 13px;text-transform: uppercase " width="95">
+                              <p:inputTextarea value="#{pregunta.pregunta}" rows="5" cols="120" style="text-align: justify;" readonly="true"  />
+
+
+                        </p:column>
+                
+                
+                <p:column headerText="MODIFICAR"
+                          width="10">
+                    <center>
+                        <p:commandButton process="data" icon="fa fa-pencil" actionListener="#{preguntaBEAN.elegirDatoPregunta(pregunta)}" oncomplete="PF('DatosPregunta').show();" update=":dialogoPregunta"/>
+                    </center>
+                </p:column>
+                
+               
+            </p:dataTable>
+        </h:form>
+                  <p:dialog header="Pregunta" widgetVar="DatosPregunta" id="dialogoPregunta" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="800">
+                   <div class="container text-center" style="margin-top: 2em">
+                    <h:form id="formDialogo">
+                            <p:growl id="mensajito" widgetVar="growlWV" autoUpdate="true" life="500" /> 
+                            <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/>
+                            <p/>
+                        <h:panelGrid id="trabajoF" columns="1" columnClasses="grid" class="container-fluid  text-justify">
+                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="700">
+                                 <h:outputText value="Nombre de Categoria:" style="color: black; font-size:14px"/>
+                                <p:selectOneMenu value="#{preguntaBEAN.pregunta.categoria}" converter="omnifaces.SelectItemsConverter" 
+                                                 styleClass="selectMenu" required="true" requiredMessage="Se Requiere Categoria"
+                                                 style="text-transform: uppercase; height:30px; width:250px">
+                                    <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
+                                    <f:selectItems value="#{categoriaBEAN.listaCategoria}" var="cateitem" itemLabel="#{cateitem.tipo}" itemValue="#{cateitem}"/>
+                                </p:selectOneMenu> 
+                                <br/><p:column/>
+                                   <h:outputText value="Pregunta:" style="color: black;font-size:14px" />
+                                 <p:inputTextarea value="#{preguntaBEAN.pregunta.pregunta}" rows="5" cols="90"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Pregunta" 
+                                             />
+                                 <br/><p:column/>
+                                  
+                                  <h:outputText value="Correcto:" style="color: black;font-size:14px" />
+                                  <p:inputTextarea value="#{preguntaBEAN.respuesta.correcto}" rows="3" cols="90"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Respuesta Correcta" 
+                                             />
+                                  <br/><p:column/>
+                                  <h:outputText value="Incorrecta 1:" style="color: black;font-size:14px" />
+                                  <p:inputTextarea value="#{preguntaBEAN.respuesta.incorrecto1}" rows="3" cols="90"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Respuesta Incorrecta1" 
+                                             />
+                                  <br/><p:column/>
+                                  <h:outputText value="Incorrecta 2:" style="color: black;font-size:14px" />
+                                  <p:inputTextarea value="#{preguntaBEAN.respuesta.incorrecto2}" rows="3" cols="90"
+                                                  style="text-align: justify;font-size:16px"   required="true" requiredMessage="Se requiere Respuesta Incorrecta2" 
+                                             />
+                                  <br/><p:column/>
+
+                            </h:panelGrid>
+                        </h:panelGrid>
+                            <p/>
+                        <center>
+                            <p:commandButton value="#{preguntaBEAN.accion}" actionListener="#{preguntaBEAN.operarPregunta()}" oncomplete="PF('DatosPregunta').hide();" update=":formaExterior"/>
+
+                            <p:commandButton value="Cancelar" immediate="true" oncomplete="PF('DatosPregunta').hide();" action="#{preguntaBEAN.limpiarPregunta()}" />
+                        </center>
+                    </h:form>
+                   </div>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

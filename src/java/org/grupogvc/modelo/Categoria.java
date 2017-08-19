@@ -5,13 +5,13 @@
  */
 package org.grupogvc.modelo;
 
-import java.io.Serializable;
+
 
 /**
  *
  * @author leiver
  */
-public class Categoria implements Serializable{
+public class Categoria {
     private int idCategoria;
     private String tipo;
     private Boolean estatus;

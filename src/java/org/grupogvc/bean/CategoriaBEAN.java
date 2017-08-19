@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.grupogvc.dao.CategoriaDAO;
 import org.primefaces.context.RequestContext;
 
@@ -20,7 +20,7 @@ import org.primefaces.context.RequestContext;
  * @author leiver
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class CategoriaBEAN implements Serializable {
 
     //objetos para la usarse en la vista

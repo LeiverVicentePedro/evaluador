@@ -7,18 +7,24 @@ package org.grupogvc.bean;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.grupogvc.dao.ReferenciaDAO;
 import org.grupogvc.modelo.Referencia;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -26,37 +32,27 @@ import org.primefaces.model.UploadedFile;
  *
  * @author leiver
  */
+
 @ManagedBean
-@SessionScoped
-
-public class ReferenciaBEAN implements Serializable {
-
-    //variables y objetos usados en la vista para las referencias
+@ViewScoped
+public class ReferenciaBEAN implements Serializable{
+    
     private Referencia referencia = new Referencia();
-    private List<Referencia> listaReferencia = new ArrayList();
-
-    //objeto para las selecciones
-    private Referencia referenciaSeleccionada = new Referencia();
-
-    //lista para los filtros
-    private List<Referencia> filtroReferencia = new ArrayList();
-
-    //objeto de la Referencia DAO para poder acceder a los datos
-    private ReferenciaDAO referenciaDao = new ReferenciaDAO();
-
-    //varialbe para establecer accion de boton en el dialog de la vista
+    private List<Referencia> listaReferencia;
+    private List<Referencia> filtroReferencia;
+    
+    private String rutaDirectorio="C:\\servidorgvc\\";
+    
     private String accion;
-
-    //variable que tiene la ruta raiz de donde se guardaran los archivos de las referencias
-    String rutaDirectorio = "C:\\servidorgvc\\";
-
-    //esta variable es unsada para guardar el contenido del archivo para subir
+    
     private UploadedFile archivo;
-
-    //varialbe Streamed para guardar el archivo para descargar
+    
+    private ReferenciaDAO referenciaDao = new ReferenciaDAO();
+    
+    private List<Referencia> referenciaSeleccionada;
+    
     private StreamedContent archivoDescarga;
-
-    //getter y setter para cada varialbe y objeto utilizado en la vista
+    
     public Referencia getReferencia() {
         return referencia;
     }
@@ -73,20 +69,20 @@ public class ReferenciaBEAN implements Serializable {
         this.listaReferencia = listaReferencia;
     }
 
-    public Referencia getReferenciaSeleccionada() {
-        return referenciaSeleccionada;
-    }
-
-    public void setReferenciaSeleccionada(Referencia referenciaSeleccionada) {
-        this.referenciaSeleccionada = referenciaSeleccionada;
-    }
-
     public List<Referencia> getFiltroReferencia() {
         return filtroReferencia;
     }
 
     public void setFiltroReferencia(List<Referencia> filtroReferencia) {
         this.filtroReferencia = filtroReferencia;
+    }
+
+    public String getRutaDirectorio() {
+        return rutaDirectorio;
+    }
+
+    public void setRutaDirectorio(String rutaDirectorio) {
+        this.rutaDirectorio = rutaDirectorio;
     }
 
     public String getAccion() {
@@ -105,31 +101,33 @@ public class ReferenciaBEAN implements Serializable {
         this.archivo = archivo;
     }
 
+    public List<Referencia> getReferenciaSeleccionada() {
+        return referenciaSeleccionada;
+    }
+
+    public void setReferenciaSeleccionada(List<Referencia> referenciaSeleccionada) {
+        this.referenciaSeleccionada = referenciaSeleccionada;
+    }
+
     public StreamedContent getArchivoDescarga() {
         return archivoDescarga;
     }
 
-    //metodo utilizado para agregar una referencia
-    public void agregarReferencia() {
-        try {
-            referenciaDao.insertarReferencia(referencia);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Registro Exitoso!.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
-        } catch (Exception ex) {
-            System.out.println("Error en ReferenciaBEAN -> agregarReferencia: " + ex);
-        }
+    public void setArchivoDescarga(StreamedContent archivoDescarga) {
+        this.archivoDescarga = archivoDescarga;
     }
-
-    //metodo para listar los elementos existentes como referencias
-    public void listarTodasReferencias() {
-        try {
+    
+    
+    
+    public void listatTodasReferencias(){
+        try{
             listaReferencia = referenciaDao.listarReferencia();
-        } catch (Exception ex) {
-            System.out.println("Error en ReferenciaBEAN -> listarTodasReferencias: " + ex);
+        }catch(Exception ex){
+            System.out.println("Error en ReferenciaBEAN -> listarTodasReferencias: "+ex);
         }
     }
-
-    public void guardarArchivo() throws IOException {
+    
+    public void guardarArchivo()throws IOException{
         try {
             String rutaDirectorio = this.rutaDirectorio + referencia.getIdCategoria().getTipo();
             File directorio = new File(rutaDirectorio);
@@ -164,24 +162,95 @@ public class ReferenciaBEAN implements Serializable {
         } catch (Exception ex) {
             System.out.println("Error en ReferenciaBEAN -> guardarArchivo: " + ex);
         }
-    }
+    } 
+    /*
+    * tipos de datos
+    * WORD              aplication/msword
+    * JPEG IMAGEN       image/jpeg
+    * VIDEO MPEG        video/mpeg
+    * PDF               aplication/pdf
+    * POWER POINT       aplication/vnd.ms-powerpoint
+    * RAR archive	application/x-rar-compressed
+    * Microsoft Excel	application/vnd.ms-excel
+    * Comma-separated values (CSV)	text/csv
+    * AVI: Audio Video Interleave	video/x-msvideo
+    * MP4 Video         video/mp4
+    */
+    public void descargar(Referencia referencia){
+         try{
+            System.out.println("Se esta Descargando...");
+            System.out.println("Extencion de l archivo: "+getExtencion(referencia.getReferencia()));
+            String tipoArchivo;
+            switch(getExtencion(referencia.getReferencia())){
+                case "pdf": tipoArchivo="application/pdf"; break;
+                case "docx": tipoArchivo="application/msword"; break;
+                case "doc": tipoArchivo="application/msword"; break;
+                case "ppt": tipoArchivo="application/vnd.ms-powerpoint"; break;
+                case "pptx": tipoArchivo="application/vnd.ms-powerpoint"; break;
+                case "csv": tipoArchivo="text/csv"; break;
+                case "xls": tipoArchivo="application/vnd.ms-excel"; break;
+                case "xlsx": tipoArchivo="application/vnd.ms-excel"; break;
+                case "mp4": tipoArchivo="video/mp4"; break;
+                case "avi": tipoArchivo="video/x-msvideo"; break;
+                case "jpeg": tipoArchivo="image/jpeg"; break;
+                case "jpg": tipoArchivo="image/jpeg"; break;
+                case "mpeg": tipoArchivo="video/mpeg"; break;
+                case "rar": tipoArchivo="application/x-rar-compressed"; break;
+                default: tipoArchivo="ninguno"; break;
+            }
+            if(!tipoArchivo.equalsIgnoreCase("ninguno")){
+                System.out.println("Tipo MIME: "+tipoArchivo);
+                System.out.println("Nombre archivo: "+ getNombreArchivo(referencia.getReferencia()));
+           
+                File ficheroXLS = new File(referencia.getReferencia());
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                FileInputStream fis = new FileInputStream(ficheroXLS);
+                byte[] bytes = new byte[1000];
+                int read = 0;
 
-    public void bajarArchivo(Referencia referencia){
-        try{
-            System.out.println("Extencion del archivo: ");
+                if (!ctx.getResponseComplete()) {
+                String fileName = ficheroXLS.getName();
+                //String contentType = "application/vnd.ms-excel";
+                String contentType = tipoArchivo;
+                HttpServletResponse response =(HttpServletResponse) ctx.getExternalContext().getResponse();
+                response.setContentType(contentType);
+                response.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
+                ServletOutputStream out = response.getOutputStream();
+
+                while ((read = fis.read(bytes)) != -1) {
+                    out.write(bytes, 0, read);
+                }
+
+                out.flush();
+                out.close();
+                System.out.println("\nDescargado\n");
+                ctx.responseComplete();
+                }
+            
+    
+            }else{
+                FacesMessage mensajeSalida = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Archivo Corrupto. Informe a su admistrador.");
+                RequestContext.getCurrentInstance().showMessageInDialog(mensajeSalida);
+            }
         }catch(Exception ex){
-            System.out.println("Error "+ex);
-            throw ex;
-        }
-       
+                System.out.println("Error en ReferenciaBEAN -> descargar: "+ex);
+            }
     }
-
-    public String getExtension(String archivo) {
+    
+    public String getExtencion(String archivo){
         int index = archivo.lastIndexOf('.');
-        if (index == -1) {
+        if(index == -1){
             return "";
-        } else {
-            return archivo.substring(index + 1);
+        }else{
+            return archivo.substring(index+1);
+        }
+    }
+    public String getNombreArchivo(String archivo){
+        int index = archivo.lastIndexOf('\\');
+        if(index == -1){
+            return "";
+        }else{
+            return archivo.substring(index+1);
         }
     }
 }

@@ -12,8 +12,10 @@ package org.grupogvc.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.grupogvc.dao.Centro_trabajoDAO;
 import org.grupogvc.modelo.Centro_trabajo;
 
@@ -104,7 +106,7 @@ public class Centro_trabajoBEAN  implements Serializable{
                 centrodao= new Centro_trabajoDAO();
                 centrodao.registrarCentro_trabajo(centro);
                 this.listarCentro();
-        
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Centro de Tabajo Registrado."));
             }
             catch(Exception e)
             {
@@ -118,6 +120,7 @@ public class Centro_trabajoBEAN  implements Serializable{
                 centrodao= new Centro_trabajoDAO();
                 centrodao.modificarCentro(centro);
                 this.listarCentro();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Centro de Trabajo Modificado."));
             }
             catch(Exception e)
             {
@@ -178,6 +181,7 @@ public class Centro_trabajoBEAN  implements Serializable{
                 centrodao= new Centro_trabajoDAO();
                 centro.setEstatus(false);
                 centrodao.modificarCentro(centro);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Centro de Tabajo Inhabilitado."));
             }
             catch(Exception e)
             {

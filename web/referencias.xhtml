@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formPrincipal" enctype="multipart/form-data">
+                    <f:event type="preRenderView" listener="#{referenciaBEAN.listatTodasReferencias()}"/>
+
+                    <p:separator style="visibility: hidden;"/>
+                    <p:outputLabel value="Lista de Referencias" class="titulo"/>
+                    <p:separator style="visibility: hidden;"/>
+                    <div align="left">
+                        <p:commandButton value="Nuevo" oncomplete="PF('dialogoReferencias').show();" class="boton"/>
+                    </div>
+                    <p:separator style="visibility: hidden;"/>
+                    <p:dataTable id="data" value="#{referenciaBEAN.listaReferencia}" var="referencia" style="font-size: 14px;" selectionMode="multiple" selection="#{referenciaBEAN.referenciaSeleccionada}" rowKey="#{referencia.idReferencia}"
+                                 liveResize="true"
+
+                                 liveScroll="true" scrollRows="10" scrollWidth="100%"
+                                 scrollable="true"
+                                 widgetVar="buscar"
+                                 filteredValue="#{referenciaBEAN.filtroReferencia}"
+                                 emptyMessage="No hay elementos encontrados"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 paginatorPosition="bottom">
+
+                        <f:facet name="header">
+                            <div align="right" >
+                                <p:outputPanel class="text-right">
+                                    <h:outputText value="Buscar:" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('buscar').filter();" 
+
+                                                 style="width:150px" />
+                                </p:outputPanel>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Norma" sortBy="#{referencia.idCategoria.tipo}" 
+                                  filterBy="#{referencia.idCategoria.tipo}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style="text-transform: uppercase">
+                            <p:outputLabel value="#{referencia.idCategoria.tipo}"/>
+                        </p:column>
+                        <p:column headerText="Descripcion" sortBy="#{referencia.descripcion}" 
+                                  filterBy="#{referencia.descripcion}"
+                                  filterMatchMode="startsWith"
+                                  filterStyle="visibility:hidden; height:0"
+                                  style="text-transform: uppercase">
+                            <p:outputLabel value="#{referencia.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="Descargar" width="70" style="text-align: center;">
+                            <p:commandButton icon="fa fa-download" actionListener="#{referenciaBEAN.descargar(referencia)}" ajax="false"/>
+                        </p:column>
+                        <p:column headerText="Elimiar" width="70" style="text-align: center;">
+                           
+                            <p:commandButton icon="fa fa-trash-o" actionListener="#{referenciaBEAN.eliminarReferencia(referencia)}" update="formPrincipal">
+                                <p:confirm header="Confirmación" message="Desea Elimiar la Referencia?" icon="fa fa-exclamation-triangle"/>
+                            </p:commandButton>
+                            
+                        </p:column>
+                    </p:dataTable>
+                    <p:separator style="visibility: hidden; border-bottom: 1em;"/>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <center>
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+                        </center>
+                    </p:confirmDialog>
+
+
+
+
+                </h:form>
+                <p:dialog widgetVar="dialogoReferencias">
+                    <h:form enctype="multipart/form-data">
+                        <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Descripción:"/>
+                            <p:inputText value="#{referenciaBEAN.referencia.descripcion}" style=" text-transform: uppercase;"/>
+                            <p:outputLabel value="Archivo:"/>
+                            <p:fileUpload label="Seleccionar" mode="simple" value="#{referenciaBEAN.archivo}"/>
+                            <p:outputLabel value="Norma:"/>
+                            <p:selectOneMenu value="#{referenciaBEAN.referencia.idCategoria}" converter="omnifaces.SelectItemsConverter" style=" text-transform: uppercase;">
+                                <f:selectItem noSelectionOption="true" itemValue="#{null}" itemLabel="-- Seleccione --"/>
+                                <f:selectItems value="#{categoriaBEAN.listaCategoria}" var="categoria" itemLabel="#{categoria.tipo}" itemValue="#{categoria}"/> 
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <p:commandButton value="Agregar" actionListener="#{referenciaBEAN.guardarArchivo()}" ajax="false" oncomplete="PF('dialogoReferencias').hide();" update="formPrincipal"/>
+                        <p:commandButton value="Cancelar" oncomplete="PF('dialogoReferencias').hide();"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -10,9 +10,9 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.grupogvc.dao.PersonalDAO;
 import org.grupogvc.modelo.Personal;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -88,8 +88,7 @@ public class PersonalBEAN implements Serializable{
             personalDao.registrarPersonal(personal);
             this.listarPersona();
             limpiarPersonal();
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Registro Exitoso!.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Personal Registrado."));
         } catch (Exception ex) {
             System.out.println("Error en PersonalBEAN -> insertarPersonal: " + ex);
         }
@@ -99,8 +98,7 @@ public class PersonalBEAN implements Serializable{
         try {
             personalDao.modificarPersonal(personal);
             limpiarPersonal();
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Registro Modificado!.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Personal Modifcado."));
         } catch (Exception ex) {
             System.out.println("Error en PersonalBEAN -> modificarPersonal: " + ex);
         }
@@ -127,8 +125,7 @@ public class PersonalBEAN implements Serializable{
             personal.setEstatus(false);
             personalDao.modificarPersonal(personal);
             this.listarPersona();
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Dato Inhabilitado!.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Personal Inhabilitado."));
             }
         } catch (Exception ex) {
             System.out.println("Error en Persona BEAN -> bajaPersona: "+ex);

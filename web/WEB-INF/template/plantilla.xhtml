@@ -10,11 +10,11 @@
         <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="cssLayout.css"/>
         <link rel="stylesheet" href="./resources/font-awesome/css/font-awesome.min.css"/><!--linea que agrega las hojas de estilos para usar las fuentes de font-awesome-->
-        <title>Facelets Template</title>
+        <title>Evaluador GVC</title>
     </h:head>
 
     <h:body>
-        <p:growl autoUpdate="true"/>
+        <p:growl id="growl" showDetail="true" autoUpdate="true"/>
         <center>
             <div>
                 <p:graphicImage library="images" name="bannerGvc.png" width="80%" style="background-repeat: no-repeat; position: relative;"/>
@@ -23,11 +23,13 @@
             <p:separator style="width: 80%"/>
             <p:separator style="width: 80%; visibility: hidden; border-bottom: 30px;"/>
         </center>
-        <center>
+       <center>
             <div id="content" class="center_content" style="width: 80%">
-                <ui:insert name="content">Content</ui:insert>
+                
+                    <ui:insert name="content">Content</ui:insert>
             </div>
-        </center>    
+        </center>
+          
         <div id="footer"  style=" font-size: 12px; text-align: center;">
             <br/>
             <div style="webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; vertical-align: baseline; margin-bottom: 5px; position: relative;">

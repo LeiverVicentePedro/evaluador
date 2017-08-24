@@ -30,6 +30,7 @@ public class PreguntaBEAN implements Serializable{
     private List<Respuesta> listarespuesta;
     private String accion;
 
+   
     public Pregunta getPregunta() {
         return pregunta;
     }
@@ -76,6 +77,7 @@ public class PreguntaBEAN implements Serializable{
     }
 
     public void setAccion(String accion) {
+        this.limpiarPregunta();
         this.accion = accion;
     }
 
@@ -110,8 +112,12 @@ public class PreguntaBEAN implements Serializable{
     }
     
      public void limpiarPregunta(){
-        this.pregunta.setPregunta(accion);
+        this.pregunta.setPregunta("");
         this.pregunta.setCategoria(null);
+        this.respuesta.setRespuesta(null);
+        this.respuesta.setCorrecto("");
+        this.respuesta.setIncorrecto1("");
+        this.respuesta.setIncorrecto2("");
     }
      //--Metodos para Registrar y Modificar
     
@@ -124,7 +130,7 @@ public class PreguntaBEAN implements Serializable{
                 
                 preguntadao.registrarPregunta(pregunta);
                 
-                Pregunta preguntaTem=preguntadao.buscarIdPregunta(getPregunta().getIdpregunta());
+                Pregunta preguntaTem=preguntadao.buscarIdPreguntaParaRespuesta(pregunta.getPregunta());
                
                
                 respuesta.setRespuesta(preguntaTem);
@@ -142,14 +148,19 @@ public class PreguntaBEAN implements Serializable{
     
       public void modificarPregunta() throws Exception{
         PreguntaDAO preguntadao;
+        RespuestaDAO respuestadao;
             try{
                 preguntadao= new PreguntaDAO();
+                respuestadao= new RespuestaDAO();
+                
                 preguntadao.modificarPregunta(pregunta);
+            respuesta=respuestadao.elegirDatoRespuesta(pregunta);
+               respuestadao.modificarRespuesta(respuesta);
                 this.listarPregunta();
             }
             catch(Exception e)
             {
-                throw e;
+                System.out.println("error en Pregunta BEAN -->Modificar Pregunta"+e);
             }
     }
       
@@ -163,13 +174,28 @@ public class PreguntaBEAN implements Serializable{
             throw e;
         }
     }
+       public void listaRespuesta() throws Exception{
+        RespuestaDAO respuestadao;
+        try{
+            respuestadao=new RespuestaDAO();
+            listarespuesta = respuestadao.listarRespuesta();
+        }
+        catch(Exception e){
+            throw e;
+        }
+    }
+     
     
     public void elegirDatoPregunta(Pregunta preguntaElegirDato) throws Exception{
         PreguntaDAO preguntadao;
+        RespuestaDAO respuestadao;
         Pregunta preguntaTemporal;
         try{
             preguntadao= new PreguntaDAO();
+            respuestadao=new RespuestaDAO();
             preguntaTemporal=preguntadao.elegirDatoPregunta(preguntaElegirDato);
+            respuesta=respuestadao.elegirDatoRespuesta(preguntaElegirDato);
+            
             
             if(preguntaTemporal != null){
                 this.pregunta = preguntaTemporal;

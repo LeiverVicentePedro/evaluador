@@ -137,4 +137,30 @@ public class PreguntaDAO extends Conexion{
         }  
         return preguntabusca;
     }
+     
+      public Pregunta buscarIdPreguntaParaRespuesta(String pregunta) throws Exception{
+        Pregunta preguntabusca= new Pregunta();
+        ResultSet resultadosetbusca;
+      try{
+            this.Conectar();
+            PreparedStatement consulta= this.getConexion().prepareCall("SELECT * FROM pregunta WHERE pregunta=?");
+            consulta.setString(1,pregunta);
+            resultadosetbusca=consulta.executeQuery();
+            if(resultadosetbusca.next()){
+            preguntabusca.setIdpregunta(resultadosetbusca.getInt("idpregunta"));
+            preguntabusca.setPregunta(resultadosetbusca.getString("pregunta"));
+            preguntabusca.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadosetbusca.getInt("idcategoria"))));
+            }
+            resultadosetbusca.close();
+            
+        }
+        catch(Exception e){
+            System.out.println("error en PreguntaDAO->buscarIdPreguntaParaRespuesta "+e);
+           throw e; 
+        }
+        finally{
+           this.Cerrar();
+        }  
+        return preguntabusca;
+    }
 } 

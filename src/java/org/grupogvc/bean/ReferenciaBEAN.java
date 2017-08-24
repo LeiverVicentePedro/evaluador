@@ -10,9 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,7 +22,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.grupogvc.dao.ReferenciaDAO;
 import org.grupogvc.modelo.Referencia;
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -229,8 +226,7 @@ public class ReferenciaBEAN implements Serializable{
             
     
             }else{
-                FacesMessage mensajeSalida = new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Archivo Corrupto. Informe a su admistrador.");
-                RequestContext.getCurrentInstance().showMessageInDialog(mensajeSalida);
+                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Advertencia", "Referencia Rota informe a su Administrador."));
             }
         }catch(Exception ex){
                 System.out.println("Error en ReferenciaBEAN -> descargar: "+ex);
@@ -251,6 +247,21 @@ public class ReferenciaBEAN implements Serializable{
             return "";
         }else{
             return archivo.substring(index+1);
+        }
+    }
+    
+    public void eliminarReferencia(Referencia referencia){
+        try{
+            File archivo = new File(referencia.getReferencia());
+            if(archivo.delete()){
+                referenciaDao.eliminarReferencia(referencia);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Informacion", "Referencia Eliminada."));
+            }else{
+                
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Referencia no Eliminada."));
+            }
+        }catch(Exception ex){
+            System.out.println("Error en ReferenciaBEAN -> eliminarArchivo: "+ex);
         }
     }
 }

@@ -57,4 +57,16 @@ public class ReferenciaDAO extends Conexion{
         return listaCategoria;
     }
     
+    public void eliminarReferencia(Referencia referencia) throws Exception{
+        try{
+            this.Conectar();
+            PreparedStatement elimina = this.getConexion().prepareStatement("DELETE FROM referencia WHERE idreferencia=?");
+            elimina.setInt(1, referencia.getIdReferencia());
+            elimina.executeUpdate();
+        }catch(Exception ex){
+            System.out.println("Error en ReferenciaDAO -> eliminarReferencia: "+ex);
+        }finally{
+            this.Cerrar();
+        }
+    }
 }

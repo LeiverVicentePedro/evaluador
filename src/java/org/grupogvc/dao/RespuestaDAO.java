@@ -40,7 +40,7 @@ public class RespuestaDAO extends Conexion{
         }
     }
      
-     public List<Respuesta> listarPregunta() throws Exception{//
+     public List<Respuesta> listarRespuesta() throws Exception{//
      List<Respuesta> lista;
         ResultSet resultadoset;
      try{
@@ -68,19 +68,19 @@ public class RespuestaDAO extends Conexion{
      return lista;
     }
      
-     public Respuesta elegirDatoRespuesta(Respuesta respuesta) throws Exception{
+     public Respuesta elegirDatoRespuesta(Pregunta pregunta) throws Exception{
         Respuesta respuestados=null;
         ResultSet resultadoset;
         
         try{
             this.Conectar();
              PreparedStatement consulta= this.getConexion().prepareStatement("SELECT * FROM respuesta WHERE idrespuesta=?");
-            consulta.setInt(1, respuesta.getRespuesta().getIdpregunta());
+            consulta.setInt(1, pregunta.getIdpregunta());
             resultadoset = consulta.executeQuery();
             while(resultadoset.next())
             {
               respuestados= new Respuesta();
-              respuestados.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadoset.getInt("idpregunta"))));
+              respuestados.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadoset.getInt("idrespuesta"))));
               respuestados.setCorrecto(resultadoset.getString("correcto"));
               respuestados.setIncorrecto1(resultadoset.getString("incorrecto1"));
               respuestados.setIncorrecto2(resultadoset.getString("incorrecto2"));
@@ -100,7 +100,7 @@ public class RespuestaDAO extends Conexion{
      public void modificarRespuesta (Respuesta respuestamodificar) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta= this.getConexion().prepareStatement("UPDATE respuesta SET idrespuesta=?,correcto=?,incorrecto1=?,incorrecto2=? WHERE idrespuesta=?");
+            PreparedStatement consulta= this.getConexion().prepareStatement("UPDATE respuesta SET correcto=?,incorrecto1=?,incorrecto2=? WHERE idrespuesta=?");
             
             consulta.setString(1,respuestamodificar.getCorrecto());
             consulta.setString(2,respuestamodificar.getIncorrecto1());
@@ -143,31 +143,5 @@ public class RespuestaDAO extends Conexion{
            this.Cerrar();
         }  
         return respuestabusca;
-    }   
-     ///esta es la que estoy usando actualmente para registrar pregunta y respuesta lo puse como prueba 
-     public Respuesta buscarPregunta(Pregunta pregunta) throws Exception{
-        Respuesta respuestabusca= new Respuesta();
-        ResultSet resultadosetbusca;
-      try{
-            this.Conectar();
-            PreparedStatement consulta= this.getConexion().prepareCall("SELECT * FROM respuesta WHERE idrespuesta=?");
-                consulta.setInt(1,pregunta.getIdpregunta());
-            resultadosetbusca=consulta.executeQuery();
-            if(resultadosetbusca.next()){
-           respuestabusca.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadosetbusca.getInt("idpregunta"))));
-              respuestabusca.setCorrecto(resultadosetbusca.getString("correcto"));
-              respuestabusca.setIncorrecto1(resultadosetbusca.getString("incorrecto1"));
-              respuestabusca.setIncorrecto2(resultadosetbusca.getString("incorrecto2")); }
-            resultadosetbusca.close();
-            
-        }
-        catch(Exception e){
-            System.out.println("error en PreguntaDAO->buscarIdPregunta "+e);
-           throw e; 
-        }
-        finally{
-           this.Cerrar();
-        }  
-        return respuestabusca;
-    }    
+    } 
 }

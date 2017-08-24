@@ -7,8 +7,10 @@ package org.grupogvc.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.grupogvc.dao.EstadoDAO;
 import org.grupogvc.modelo.Estado;
 
@@ -96,6 +98,7 @@ public class EstadoBEAN implements Serializable{
                 estadodao= new EstadoDAO();
                 estadodao.registrarEstado(estado);
                 this.listarEstado();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Estado Registrado."));
         
             }
             catch(Exception e)
@@ -110,6 +113,7 @@ public class EstadoBEAN implements Serializable{
                 estadodao= new EstadoDAO();
                 estadodao.modificarEstado(estado);
                 this.listarEstado();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Estado Modifcado."));
             }
             catch(Exception e)
             {
@@ -170,6 +174,7 @@ public class EstadoBEAN implements Serializable{
                 estadodao= new EstadoDAO();
                 estado.setEstatus(false);
                 estadodao.modificarEstado(estado);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Estado Inhabilitado."));
             }
             catch(Exception e)
             {

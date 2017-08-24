@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.grupogvc.dao.CategoriaDAO;
-import org.primefaces.context.RequestContext;
+
 
 /**
  *
@@ -95,8 +96,7 @@ public class CategoriaBEAN implements Serializable {
             categoriaDao.insertarCategoria(categoria);
             this.listarCategorias();
             limpiarCategoria();
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Registro Exitoso!.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Categoría Registrada."));
         } catch (Exception ex) {
             System.out.println("Error en CategoriaBEAN -> insertarCategoria: " + ex);
         }
@@ -106,8 +106,7 @@ public class CategoriaBEAN implements Serializable {
         try {
             categoriaDao.modificarCategoria(categoria);
             limpiarCategoria();
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Registro Modificado!.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Categoría Modificada."));
         } catch (Exception ex) {
             System.out.println("Error en CategoriaBEAN -> modificarCategoria: " + ex);
         }
@@ -134,8 +133,7 @@ public class CategoriaBEAN implements Serializable {
             categoria.setEstatus(false);
             categoriaDao.modificarCategoria(categoria);
             this.listarCategorias();
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Informacion", "Dato Inhabilitado!.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Dato Inhabilitado."));
             }
         } catch (Exception ex) {
             System.out.println("Error en CategoriaBEAN -> bajaCategoria: "+ex);

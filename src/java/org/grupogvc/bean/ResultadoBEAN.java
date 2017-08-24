@@ -7,8 +7,10 @@ package org.grupogvc.bean;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.grupogvc.dao.ResultadoDAO;
 import org.grupogvc.modelo.Resultado;
 
@@ -94,7 +96,7 @@ public class ResultadoBEAN implements Serializable {
                 resultadodao= new ResultadoDAO();
                 resultadodao.registrarResultado(resultado);
                 this.listarResultado();
-        
+                
             }
             catch(Exception e)
             {

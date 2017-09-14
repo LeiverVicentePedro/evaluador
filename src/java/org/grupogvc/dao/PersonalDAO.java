@@ -65,6 +65,7 @@ public class PersonalDAO extends Conexion{
              persona.setTelefono(resultadoset.getString("telefono"));
              persona.setCorreoElectronico(resultadoset.getString("correoElectronico"));
              persona.setEstatus(resultadoset.getBoolean("estatus"));
+             persona.setNivel(resultadoset.getInt("nivel"));
              
              lista.add(persona);
          }
@@ -100,6 +101,7 @@ public class PersonalDAO extends Conexion{
              personados.setTelefono(resultadoset.getString("telefono"));
              personados.setCorreoElectronico(resultadoset.getString("correoElectronico"));
              personados.setEstatus(resultadoset.getBoolean("estatus"));
+             personados.setNivel(resultadoset.getInt("nivel"));
             }
         }
         catch(Exception e){
@@ -115,7 +117,7 @@ public class PersonalDAO extends Conexion{
      public void modificarPersonal (Personal personamodificar) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta= this.getConexion().prepareStatement("UPDATE personal SET clave=?,nombre=?,apat=?,amat=?,puesto=?,idcent_trab=?,telefono=?,correoElectronico=?,estatus=? WHERE idpersonal=?");
+            PreparedStatement consulta= this.getConexion().prepareStatement("UPDATE personal SET clave=?,nombre=?,apat=?,amat=?,puesto=?,idcent_trab=?,telefono=?,correoElectronico=?,estatus=?,nivel=? WHERE idpersonal=?");
              consulta.setString(1, personamodificar.getClave());
              consulta.setString(2, personamodificar.getNombre());
              consulta.setString(3, personamodificar.getApat());
@@ -125,7 +127,8 @@ public class PersonalDAO extends Conexion{
              consulta.setString(7, personamodificar.getTelefono());
              consulta.setString(8, personamodificar.getCorreoElectronico());
             consulta.setBoolean(9,personamodificar.getEstatus());
-             consulta.setInt(10, personamodificar.getIdpersonal());
+            consulta.setInt(10, personamodificar.getNivel());
+             consulta.setInt(11, personamodificar.getIdpersonal());
             
             consulta.executeUpdate();
         }
@@ -157,6 +160,7 @@ public class PersonalDAO extends Conexion{
              personabusca.setTelefono(resultadosetbusca.getString("telefono"));
              personabusca.setCorreoElectronico(resultadosetbusca.getString("correoElectronico"));
              personabusca.setEstatus(resultadosetbusca.getBoolean("estatus"));
+             personabusca.setNivel(resultadosetbusca.getInt("nivel"));
             }
             resultadosetbusca.close();
             

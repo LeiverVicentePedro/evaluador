@@ -89,6 +89,7 @@ public class PersonalBEAN implements Serializable{
     }
 
     public void setAccion(String accion) {
+        this.limpiarPersonal();
         this.accion = accion;
     }
     
@@ -175,6 +176,7 @@ public class PersonalBEAN implements Serializable{
         personal.setTelefono("");
         personal.setCorreoElectronico("");
         personal.setEstatus(null);
+        personal.setNivel(0);
     }
     
     public void operarPersonal() throws Exception{

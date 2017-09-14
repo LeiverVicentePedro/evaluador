@@ -244,6 +244,12 @@
                                  <f:selectItem itemLabel="INACTIVO" itemValue="false"/>
                                 </p:selectOneMenu>
                                 <p:column><br/> </p:column><p:column><br/> </p:column>
+                                 <p:outputLabel value="Nivel:" style="color: black;font-size:14px"/>
+                                 <p:selectOneMenu value="#{personalBEAN.personal.nivel}" styleClass="selectMenu" label="Nivel" style="height:30px;width:200px">
+                                 <f:selectItem itemLabel="1-Verficador" itemValue="1"/>
+                                 <f:selectItem itemLabel="2-Administrador" itemValue="2"/>
+                                </p:selectOneMenu>
+                                <p:column><br/> </p:column><p:column><br/> </p:column>
                                 
                                 </h:panelGrid>
                              </h:panelGrid>
@@ -282,6 +288,10 @@
                         <p:column><br/> </p:column><p:column><br/> </p:column>
                           <h:outputText value="Centro de Trabajo: " style="color: black;font-size:13px" />
                           <h:outputText value="#{personalBEAN.personal.centro.lugar}" styleClass="outputLabel"
+                                        style="color: black;font-size:13px;text-transform: uppercase"/>
+                        <p:column><br/> </p:column><p:column><br/> </p:column>
+                         <h:outputText value="Nivel: " style="color: black;font-size:13px" />
+                         <h:outputText value="#{personalBEAN.personal.nivel}" styleClass="outputLabel"
                                         style="color: black;font-size:13px;text-transform: uppercase"/>
                         <p:column><br/> </p:column><p:column><br/> </p:column>
                           

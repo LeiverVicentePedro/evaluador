@@ -38,12 +38,12 @@ public class Centro_trabajoDAO extends Conexion{
         }
     }
      
-     public List<Centro_trabajo> listarCentro() throws Exception{//uso unico para la vista Area
+     public List<Centro_trabajo> listarCentro() throws Exception{
      List<Centro_trabajo> lista;
         ResultSet resultadoset;
      try{
          this.Conectar();
-         PreparedStatement consulta=this.getConexion().prepareCall("SELECT idcent_trab,lugar,idestado, estatus FROM cent_trab");
+         PreparedStatement consulta=this.getConexion().prepareCall("SELECT * FROM cent_trab");
          resultadoset= consulta.executeQuery();
          lista =new ArrayList();
          while(resultadoset.next()){

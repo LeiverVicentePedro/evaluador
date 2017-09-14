@@ -30,7 +30,7 @@ public class ExamenDAO extends Conexion{
             while(resultado.next()){
                 Examen evaluacion = new Examen();
                 evaluacion.setPregunta(new PreguntaDAO().buscarIdPregunta(resultado.getInt("idpregunta")));
-                evaluacion.setRespuesta(new RespuestaDAO().buscarIdRespuesta(resultado.getInt("idrespuesta")));
+                //evaluacion.setRespuesta(new RespuestaDAO().buscarIdRespuesta(resultado.getInt("idrespuesta")));
                 listaEvaluacion.add(evaluacion);
             }
         }catch(Exception ex){

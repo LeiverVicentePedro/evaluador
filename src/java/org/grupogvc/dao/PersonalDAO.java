@@ -20,7 +20,7 @@ public class PersonalDAO extends Conexion{
     public void registrarPersonal(Personal personaregistra) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta= this.getConexion().prepareStatement("INSERT INTO personal (clave,nombre,apat,amat,puesto,idcent_trab,telefono,correoElectronico,estatus) values(?,?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta= this.getConexion().prepareStatement("INSERT INTO personal (clave,nombre,apat,amat,puesto,idcent_trab,telefono,correoElectronico,estatus,nivel) values(?,?,?,?,?,?,?,?,?,?)");
           
              consulta.setString(1, personaregistra.getClave());
              consulta.setString(2, personaregistra.getNombre());
@@ -31,6 +31,7 @@ public class PersonalDAO extends Conexion{
              consulta.setString(7, personaregistra.getTelefono());
              consulta.setString(8, personaregistra.getCorreoElectronico());
             consulta.setBoolean(9,personaregistra.getEstatus());
+            consulta.setInt(10, personaregistra.getNivel());
            
             consulta.executeUpdate();
         }

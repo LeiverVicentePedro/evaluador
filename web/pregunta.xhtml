@@ -58,9 +58,9 @@
                           filterBy="#{pregunta.categoria.tipo}"
                           filterMatchMode="startsWith"
                           filterStyle="visibility:hidden; height:0"
-                          style="text-transform: uppercase" width="1">
+                          style="text-transform: uppercase;font-size: 12px" width="1">
                     
-                    <h:outputText value="#{pregunta.categoria.tipo}" />
+                    <h:outputText value="#{pregunta.categoria.tipo}" style=" font-size: 12px" />
                    
                 </p:column>
                  <p:column headerText="Pregunta"
@@ -68,31 +68,54 @@
                                   filterBy="#{pregunta.pregunta}"
                                   filterMatchMode="startsWith"
                                   filterStyle="visibility:hidden; height:0"
-                                  style=" font-size: 13px;text-transform: uppercase " width="95">
-                              <p:inputTextarea value="#{pregunta.pregunta}" rows="5" cols="120" style="text-align: justify;" readonly="true"  />
+                                  style=" font-size: 12px;text-transform: uppercase " width="80">
+                              <p:inputTextarea value="#{pregunta.pregunta}" rows="5" cols="90" style="text-align: justify;" readonly="true"  />
 
 
                         </p:column>
-                
+                <p:column headerText="ESTADO"
+                           sortBy="#{pregunta.estatus}"
+                          filterBy="#{pregunta.estatus}"
+                          filterMatchMode="startsWith" 
+                           filterStyle="visibility:hidden; height:0" style=" font-size: 12px;" width="15">
+                                     
+                                       
+                    <p:outputLabel value="#{pregunta.estatus}"  >
+                        <f:converter converterId="conversionEstatus" />
+                    </p:outputLabel>
+                </p:column>
                 
                 <p:column headerText="MODIFICAR"
-                          width="10">
+                          width="11" style=" font-size: 12px;">
                     <center>
                         <p:commandButton process="data" icon="fa fa-pencil" actionListener="#{preguntaBEAN.elegirDatoPregunta(pregunta)}" oncomplete="PF('DatosPregunta').show();" update=":dialogoPregunta"/>
                     </center>
                 </p:column>
+                  <p:column headerText="INHABILITAR"
+                          width="15" style=" font-size: 12px;">
+                    <center>
+                        <p:commandButton process="data" icon="#{pregunta.icono}" actionListener="#{preguntaBEAN.elegirDatoPreguntaInhabilitar(pregunta)}" update="data"/>
+                    </center>
+                </p:column>
+                  <p:column headerText="ELIMINAR"
+                          width="12" style=" font-size: 12px;">
+                    <center>
+                        <p:commandButton process="data" icon="fa fa-trash-o" actionListener="#{preguntaBEAN.eliminarPregunta(pregunta)}" update="data"/>
+                    </center>
+                </p:column>
+                 
                 
                
             </p:dataTable>
         </h:form>
-                  <p:dialog header="Pregunta" widgetVar="DatosPregunta" id="dialogoPregunta" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="800">
+                  <p:dialog header="Pregunta" widgetVar="DatosPregunta" id="dialogoPregunta" class="container-fluid" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="890px">
                    <div class="container text-center" style="margin-top: 2em">
                     <h:form id="formDialogo">
-                            <p:growl id="mensajito" widgetVar="growlWV" autoUpdate="true" life="500" /> 
-                            <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/> 
+                           
+                        <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/> 
                             <p/>
                         <h:panelGrid id="trabajoF" columns="1" columnClasses="grid" class="container-fluid  text-justify">
-                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="700">
+                            <h:panelGrid columns="2" columnClasses="label, value" class="container-fluid  text-justify" width="840px">
                                  <h:outputText value="Nombre de Categoria:" style="color: black; font-size:14px"/>
                                 <p:selectOneMenu value="#{preguntaBEAN.pregunta.categoria}" converter="omnifaces.SelectItemsConverter" 
                                                  styleClass="selectMenu" required="true" requiredMessage="Se Requiere Categoria"

@@ -23,6 +23,7 @@ public class Personal implements Serializable{
     private String telefono;
     private String correoElectronico;
     private Boolean estatus;
+    private int nivel;
 
     public int getIdpersonal() {
         return idpersonal;
@@ -103,6 +104,16 @@ public class Personal implements Serializable{
     public void setEstatus(Boolean estatus) {
         this.estatus = estatus;
     }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+    
+    
 
     @Override
     public int hashCode() {

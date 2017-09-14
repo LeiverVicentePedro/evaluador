@@ -80,7 +80,7 @@ public class RespuestaDAO extends Conexion{
             while(resultadoset.next())
             {
               respuestados= new Respuesta();
-              respuestados.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadoset.getInt("idrespuesta"))));
+              respuestados.setRespuesta(pregunta);
               respuestados.setCorrecto(resultadoset.getString("correcto"));
               respuestados.setIncorrecto1(resultadoset.getString("incorrecto1"));
               respuestados.setIncorrecto2(resultadoset.getString("incorrecto2"));
@@ -119,13 +119,13 @@ public class RespuestaDAO extends Conexion{
         }
     }
      
-     public Respuesta buscarIdRespuesta(int idrespuesta) throws Exception{
+     public Respuesta buscarIdRespuesta(String idrespuesta) throws Exception{
         Respuesta respuestabusca= new Respuesta();
         ResultSet resultadosetbusca;
       try{
             this.Conectar();
             PreparedStatement consulta= this.getConexion().prepareCall("SELECT * FROM respuesta WHERE idrespuesta=?");
-                consulta.setInt(1,idrespuesta);
+                consulta.setString(1,idrespuesta);
             resultadosetbusca=consulta.executeQuery();
             if(resultadosetbusca.next()){
            respuestabusca.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadosetbusca.getInt("idpregunta"))));
@@ -144,4 +144,19 @@ public class RespuestaDAO extends Conexion{
         }  
         return respuestabusca;
     } 
+     
+     public void eliminarRespuesta (Pregunta preguntaElimina) throws Exception{
+        try{
+            this.Conectar();
+            PreparedStatement consulta= this.getConexion().prepareStatement("DELETE FROM respuesta WHERE idrespuesta=?");
+            consulta.setInt(1,preguntaElimina.getIdpregunta());
+            consulta.executeUpdate();
+        }
+        catch(Exception e){
+           throw e; 
+        }
+        finally{
+           this.Cerrar();
+        }
+    }   
 }

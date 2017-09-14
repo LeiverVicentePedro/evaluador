@@ -26,8 +26,19 @@ public class PersonalBEAN implements Serializable{
     private List<Personal> filterpersonal;
     private List<Personal> seleccionpersonal;
     private String accion;
+    private Personal cargaUsuario=new Personal();
     
     PersonalDAO personalDao=new PersonalDAO();
+
+    public Personal getCargaUsuario() {
+        return cargaUsuario;
+    }
+
+    public void setCargaUsuario(Personal cargaUsuario) {
+        this.cargaUsuario = cargaUsuario;
+    }
+    
+    
 
     public PersonalDAO getPersonalDao() {
         return personalDao;
@@ -93,6 +104,10 @@ public class PersonalBEAN implements Serializable{
             System.out.println("Error en PersonalBEAN -> insertarPersonal: " + ex);
         }
     }
+    
+    public void cargarDatosUsuario() throws Exception{
+        cargaUsuario=new PersonalDAO().buscarIdPersona(32);
+    }
 
     public void modificarPersonal() {
         try {
@@ -101,6 +116,15 @@ public class PersonalBEAN implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Personal Modifcado."));
         } catch (Exception ex) {
             System.out.println("Error en PersonalBEAN -> modificarPersonal: " + ex);
+        }
+    }
+    public void modificarUsuario() {//este metodo se usa para la vista Usuario(modificar sus datos)
+        try {
+            
+            personalDao.modificarPersonal(cargaUsuario);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Datos Guardados."));
+        } catch (Exception ex) {
+            System.out.println("Error en PersonalBEAN -> modificarUsuario: " + ex);
         }
     }
 

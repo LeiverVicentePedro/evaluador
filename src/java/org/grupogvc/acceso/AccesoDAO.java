@@ -22,7 +22,7 @@ public class AccesoDAO extends Conexion{
         try{
              
             this.Conectar();
-            PreparedStatement consulta = this.getConexion().prepareStatement("Select * from personal where clave=?");
+            PreparedStatement consulta = this.getConexion().prepareStatement("Select * from personal where clave=? and estatus=1");
             consulta.setString(1, clave);
             ResultSet resultado = consulta.executeQuery();
             if(resultado.next()== true){
@@ -36,6 +36,7 @@ public class AccesoDAO extends Conexion{
              personal.setTelefono(resultado.getString("telefono"));
              personal.setCorreoElectronico(resultado.getString("correoElectronico"));
              personal.setEstatus(resultado.getBoolean("estatus"));
+             personal.setNivel(resultado.getInt("nivel"));
             }
         }catch(Exception ex){
             System.out.println("Error en AccesoDAO -> accesoPersonal: "+ex);

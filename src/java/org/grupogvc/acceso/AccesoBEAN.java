@@ -8,6 +8,7 @@ package org.grupogvc.acceso;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.grupogvc.modelo.Personal;
 
 /**
@@ -16,7 +17,7 @@ import org.grupogvc.modelo.Personal;
  */
 @ManagedBean
 @ViewScoped
-public class AccesoBEAN implements Serializable{
+public class AccesoBEAN implements Serializable {
 
     private String redireccion;
     private String clave;
@@ -45,8 +46,24 @@ public class AccesoBEAN implements Serializable{
     public void setPersonal(Personal personal) {
         this.personal = personal;
     }
-    
-    public void accesoSistema(){
-        
+
+    public void accesoSistema() {
+        try {
+            if (new AccesoDAO().accesoPersonal(clave) != null) {
+                personal =new AccesoDAO().accesoPersonal(clave);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", personal);
+                
+                if(personal.getNivel()==1){
+                    
+                }
+                if(personal.getNivel()==2){
+                    
+                }else{
+                    
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Error en AccesoBEAN -> accesoSistema: " + ex);
+        }
     }
 }

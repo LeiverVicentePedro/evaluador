@@ -16,7 +16,18 @@ public class Pregunta implements Serializable{
     private int idpregunta;
     private String pregunta;
     private Categoria categoria;
+    private Boolean estatus;
+    private String icono;
 
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+    
+    
     public int getIdpregunta() {
         return idpregunta;
     }
@@ -41,6 +52,14 @@ public class Pregunta implements Serializable{
         this.categoria = categoria;
     }
 
+    public Boolean getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(Boolean estatus) {
+        this.estatus = estatus;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

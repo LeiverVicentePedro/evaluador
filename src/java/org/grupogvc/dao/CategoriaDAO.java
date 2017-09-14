@@ -73,16 +73,18 @@ public class CategoriaDAO extends Conexion{
     
     public Categoria buscarIdCategoria(int idCategoria) throws Exception{
         Categoria categoria = new Categoria();
+        ResultSet resultado;
         try{
             this.Conectar();
             PreparedStatement consulta = this.getConexion().prepareStatement("SELECT * FROM categoria WHERE idcategoria=?");
             consulta.setInt(1, idCategoria);
-            ResultSet resultado = consulta.executeQuery();
-            while(resultado.next()){
+            resultado = consulta.executeQuery();
+            if(resultado.next()){
                 categoria.setIdCategoria(resultado.getInt("idcategoria"));
                 categoria.setTipo(resultado.getString("tipo"));
                 categoria.setEstatus(resultado.getBoolean("estatus"));
             }
+             resultado.close();
         }catch(Exception ex){
             System.out.println("Error en CategoriaDAO -> buscarIdCategoria: "+ex);
         }finally{

@@ -21,11 +21,11 @@ public class PreguntaDAO extends Conexion{
     public void registrarPregunta(Pregunta preguntaregistra) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta= this.getConexion().prepareStatement("INSERT INTO pregunta (pregunta,idcategoria) values(?,?)");
+            PreparedStatement consulta= this.getConexion().prepareStatement("INSERT INTO pregunta (pregunta,idcategoria,estatus) values(?,?,?)");
           
              consulta.setString(1, preguntaregistra.getPregunta());
             consulta.setInt(2,preguntaregistra.getCategoria().getIdCategoria());
-           
+            consulta.setBoolean(3, true);
             consulta.executeUpdate();
         }
         catch(Exception e){
@@ -51,6 +51,7 @@ public class PreguntaDAO extends Conexion{
              pregunta.setIdpregunta(resultadoset.getInt("idpregunta"));
              pregunta.setPregunta(resultadoset.getString("pregunta"));
              pregunta.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadoset.getInt("idcategoria"))));
+             pregunta.setEstatus(resultadoset.getBoolean("estatus"));
              
              lista.add(pregunta);
          }
@@ -80,7 +81,7 @@ public class PreguntaDAO extends Conexion{
               preguntados.setIdpregunta(resultadoset.getInt("idpregunta"));
               preguntados.setPregunta(resultadoset.getString("pregunta"));
               preguntados.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadoset.getInt("idcategoria"))));
-             
+              preguntados.setEstatus(resultadoset.getBoolean("estatus"));
             }
         }
         catch(Exception e){
@@ -96,10 +97,11 @@ public class PreguntaDAO extends Conexion{
      public void modificarPregunta (Pregunta preguntamodificar) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta= this.getConexion().prepareStatement("UPDATE pregunta SET pregunta=?,idcategoria=? WHERE idpregunta=?");
+            PreparedStatement consulta= this.getConexion().prepareStatement("UPDATE pregunta SET pregunta=?,idcategoria=?,estatus=? WHERE idpregunta=?");
             consulta.setString(1, preguntamodificar.getPregunta());
             consulta.setInt(2,preguntamodificar.getCategoria().getIdCategoria());
-            consulta.setInt(3,preguntamodificar.getIdpregunta());
+            consulta.setBoolean(3,preguntamodificar.getEstatus());
+            consulta.setInt(4,preguntamodificar.getIdpregunta());
             
             consulta.executeUpdate();
         }
@@ -124,6 +126,7 @@ public class PreguntaDAO extends Conexion{
             preguntabusca.setIdpregunta(resultadosetbusca.getInt("idpregunta"));
             preguntabusca.setPregunta(resultadosetbusca.getString("pregunta"));
             preguntabusca.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadosetbusca.getInt("idcategoria"))));
+            preguntabusca.setEstatus(resultadosetbusca.getBoolean("estatus"));
             }
             resultadosetbusca.close();
             
@@ -150,6 +153,8 @@ public class PreguntaDAO extends Conexion{
             preguntabusca.setIdpregunta(resultadosetbusca.getInt("idpregunta"));
             preguntabusca.setPregunta(resultadosetbusca.getString("pregunta"));
             preguntabusca.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadosetbusca.getInt("idcategoria"))));
+            preguntabusca.setEstatus(resultadosetbusca.getBoolean("estatus"));
+            
             }
             resultadosetbusca.close();
             
@@ -163,4 +168,18 @@ public class PreguntaDAO extends Conexion{
         }  
         return preguntabusca;
     }
+      public void eliminarPregunta (Pregunta preguntaeliminar) throws Exception{
+        try{
+            this.Conectar();
+            PreparedStatement consulta= this.getConexion().prepareStatement("DELETE FROM pregunta WHERE idpregunta=?");
+            consulta.setInt(1,preguntaeliminar.getIdpregunta());
+            consulta.executeUpdate();
+        }
+        catch(Exception e){
+           throw e; 
+        }
+        finally{
+           this.Cerrar();
+        }
+    }   
 } 

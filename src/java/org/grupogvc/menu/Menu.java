@@ -5,11 +5,13 @@
  */
 package org.grupogvc.menu;
 
+import java.io.Serializable;
+
 /**
  *
  * @author leiver
  */
-public class Menu {
+public class Menu implements Serializable{
     private int idmenu;
     private int nivel_usuaio;
     private ElementoMenu idelemento_menu;

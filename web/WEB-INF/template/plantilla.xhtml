@@ -32,8 +32,11 @@
            <div  style="width: 80%">
                <ui:insert name="top">
                     <h:form>
+                        
                         <p:menubar model="#{menuBEAN.menuPrincipal}" style="border: hidden;">
                             <f:facet name="options">
+                                <p:outputLabel value="Bienvenido: " style="font-family: sans-serif; margin-right: 0.2em; font-weight: bold; color: #0000cc;"/>
+                                <p:outputLabel value="#{accesoBEAN.personal.nombre}" style="margin-right: 1em; font-family: sans-serif; font-weight: bold; text-transform: uppercase"/>
                                 <p:commandButton value="Cerrar Sesion" icon="fa fa-power-off" actionListener="#{menuBEAN.cerrarSesion()}" action="index.xhtml"/>
                             </f:facet>
                         </p:menubar>

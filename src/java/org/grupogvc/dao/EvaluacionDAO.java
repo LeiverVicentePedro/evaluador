@@ -67,7 +67,7 @@ public class EvaluacionDAO extends Conexion{
             consulta.setInt(1, idEvaluacion);
             ResultSet resultado = consulta.executeQuery();
            
-            while(resultado.next()){
+            if(resultado.next()==true){
                evaluacion.setIdevaluacion(new CategoriaDAO().buscarIdCategoria(resultado.getInt("idevaluacion")));
                evaluacion.setInicio(resultado.getString("inicio"));
                evaluacion.setFin(resultado.getString("fin"));
@@ -85,6 +85,8 @@ public class EvaluacionDAO extends Conexion{
         }
         return evaluacion;
     }
+    
+    
     
     public List listarEvaluacion() throws Exception{
         List<Evaluacion> listaEvaluacion = new ArrayList<Evaluacion>();

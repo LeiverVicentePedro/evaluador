@@ -13,19 +13,21 @@
             <ui:define name="content">
                 <h:form>
                     <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/> 
-                    <p:panel>
-                        <p:panelGrid columns="1" style="text-align: center;">
+                    <p:panel style="border: none;">
+                        <h:panelGrid columns="1" style="text-align: center;">
                             <p:outputLabel value="Seleccione la Norma a Evaluar"/>
-                        <p:selectOneMenu value="#{preguntaBEAN.pregunta.categoria}" converter="omnifaces.SelectItemsConverter" 
+                            <p:selectOneMenu value="#{accesoExamenBEAN.categoria}" converter="omnifaces.SelectItemsConverter" 
                                          styleClass="selectMenu" required="true" requiredMessage="Se Requiere Categoria"
                                          style="text-transform: uppercase; height:30px; width:250px">
                             <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>
                             <f:selectItems value="#{categoriaBEAN.listaCategoria}" var="cateitem" itemLabel="#{cateitem.tipo}" itemValue="#{cateitem}"/>
                         </p:selectOneMenu>
                         <p:separator style="visibility: hidden;"/>
-                        </p:panelGrid>
+                        </h:panelGrid>
+                        <center>
+                            <p:commandButton value="Iniciar" icon="fa fa-play" action="#{accesoExamenBEAN.URL()}" actionListener="#{accesoExamenBEAN.verificaEvaluacion()}"/>
+                        </center>
                         
-                        <p:commandButton value="Iniciar" icon="fa fa-play"/>
                     </p:panel>
                 </h:form>
 

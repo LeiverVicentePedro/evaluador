@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -11,22 +12,40 @@
         <h:outputStylesheet library="css" name="cssLayout.css"/>
         <link rel="stylesheet" href="./resources/font-awesome/css/font-awesome.min.css"/><!--linea que agrega las hojas de estilos para usar las fuentes de font-awesome-->
         <title>Evaluador GVC</title>
+        <f:event type="preRenderView" listener="#{accesoBEAN.exite()}"/>
     </h:head>
 
     <h:body>
+        <f:event type="preRenderView" listener="#{menuBEAN.crearMenu()}"/>
         <p:growl id="growl" showDetail="true" autoUpdate="true"/>
         <center>
             <div>
                 <p:graphicImage library="images" name="bannerGvc.png" width="80%" style="background-repeat: no-repeat; position: relative;"/>
-            </div>
-            <p:separator style="width: 80%"/>
-            <p:separator style="width: 80%"/>
-            <p:separator style="width: 80%; visibility: hidden; border-bottom: 30px;"/>
-        </center>
-       <center>
-            <div id="content" class="center_content" style="width: 80%">
                 
-                    <ui:insert name="content">Content</ui:insert>
+            </div>
+            <!--<p:separator style="width: 80%"/>
+            <p:separator style="width: 80%"/> -->
+            
+        </center>
+        
+        <center>
+           <div  style="width: 80%">
+               <ui:insert name="top">
+                    <h:form>
+                        <p:menubar model="#{menuBEAN.menuPrincipal}" style="border: hidden;">
+                            <f:facet name="options">
+                                <p:commandButton value="Cerrar Sesion" icon="fa fa-power-off" actionListener="#{menuBEAN.cerrarSesion()}" action="index.xhtml"/>
+                            </f:facet>
+                        </p:menubar>
+                    </h:form>
+                </ui:insert>
+           </div>
+        </center>
+        <center>
+            <div id="content"  style="width: 80%">
+                <p:separator style="width: 80%; visibility: hidden; border-bottom: 30px;"/> 
+                
+                    <ui:insert name="content"></ui:insert>
             </div>
         </center>
           

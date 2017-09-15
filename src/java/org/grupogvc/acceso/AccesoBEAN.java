@@ -23,7 +23,8 @@ public class AccesoBEAN implements Serializable {
     private String redireccion;
     private String clave;
     private Personal personal = new Personal();
-
+     private String nombre
+             ;
     public String getRedireccion() {
         return redireccion;
     }
@@ -50,6 +51,15 @@ public class AccesoBEAN implements Serializable {
         this.personal = personal;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
     public void accesoSistema() {
         try {
             if (new AccesoDAO().accesoPersonal(clave) != null) {
@@ -74,11 +84,15 @@ public class AccesoBEAN implements Serializable {
         try {
             FacesContext contexto = FacesContext.getCurrentInstance();
             Personal usuarioVive = (Personal) contexto.getExternalContext().getSessionMap().get("personal");
-            if (usuarioVive == null) {
+            
+            if (usuarioVive.getCentro() == null) {
                 contexto.getExternalContext().redirect("index.xhtml");
+                System.out.println("Nombre Personal: "+usuarioVive.getNombre());    
+            }else{
+               personal = usuarioVive; 
             }
         } catch (Exception ex) {
-
+            System.out.println("Error en AccesoBEAN -> existe: "+ex);
         }
     }
 }

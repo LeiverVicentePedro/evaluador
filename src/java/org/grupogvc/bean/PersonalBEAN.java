@@ -107,7 +107,10 @@ public class PersonalBEAN implements Serializable{
     }
     
     public void cargarDatosUsuario() throws Exception{
-        cargaUsuario=new PersonalDAO().buscarIdPersona(32);
+        FacesContext contexto = FacesContext.getCurrentInstance(); //paraq entrar ql dom del navegador
+            Personal usuarioVive = (Personal) contexto.getExternalContext().getSessionMap().get("personal");//llamo a  la etiqueta usuario que es un objeto que ya debe
+
+        cargaUsuario=new PersonalDAO().buscarIdPersona(usuarioVive.getIdpersonal());
     }
 
     public void modificarPersonal() {

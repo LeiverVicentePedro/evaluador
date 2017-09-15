@@ -27,6 +27,7 @@ public class ResultadoBEAN implements Serializable {
     private List<Resultado> listaresultado;
     private List<Resultado> filterresultado;
     private List<Resultado> seleccionresultado;
+    private List<Resultado> listaResultadoUnUsuario;
     private String accion;
 
     public Resultado getResultado() {
@@ -88,6 +89,14 @@ public class ResultadoBEAN implements Serializable {
     public void setPersona(Personal persona) {
         this.persona = persona;
     }
+
+    public List<Resultado> getListaResultadoUnUsuario() {
+        return listaResultadoUnUsuario;
+    }
+
+    public void setListaResultadoUnUsuario(List<Resultado> listaResultadoUnUsuario) {
+        this.listaResultadoUnUsuario = listaResultadoUnUsuario;
+    }
     
          
      public void limpiarResultado(){
@@ -125,6 +134,20 @@ public class ResultadoBEAN implements Serializable {
         }
         catch(Exception e){
             throw e;
+        }
+    }
+     //Listado que se ocupa en principalUno
+     public void listaResultadoUsuario() {
+        ResultadoDAO resultadodao;
+
+        try {
+            resultadodao = new ResultadoDAO();
+            FacesContext contexto = FacesContext.getCurrentInstance(); //paraq entrar ql dom del navegador
+            Personal usuarioVive = (Personal) contexto.getExternalContext().getSessionMap().get("personal");//llamo a  la etiqueta usuario que es un objeto que ya debe
+
+            listaResultadoUnUsuario = resultadodao.listaResultadoUno(usuarioVive.getIdpersonal());
+        } catch (Exception e) {
+            System.out.println("Error en Resultado BEAN -> listaResultado " + e);
         }
     }
     

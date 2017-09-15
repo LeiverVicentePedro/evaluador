@@ -14,18 +14,114 @@
             <ui:define name="content">
                 <h:panelGrid>
                     <center>
-                <p:outputLabel value="BIENVENIDO VERIFICADOR" style="font-size: 25px;color: blue" />
+                <p:outputLabel value="BIENVENIDO" style="font-size: 20px;color: blue" />
                     </center>
                 </h:panelGrid>
                 <h:form id="formaExterior">        
            
-            <center>
-                      <p:separator style="visibility: hidden;"/> 
+                    <center>
+                     <p:separator style="visibility: hidden;"/> 
                    <p:outputLabel value="Mis Resultados" style="font-size: 25px;" />
                     </center>
                   <p:separator style="visibility: hidden;"/> 
-             
-                            <f:event type="preRenderView" listener="#{centro_trabajoBEAN.listarCentro()}"/>  
+                  <f:event type="preRenderView" listener="#{resultadoBEAN.listaResultadoUsuario()}"/>
+                  <p:dataTable id="data" var="resultado" value="#{resultadoBEAN.listaResultadoUnUsuario}" 
+                         
+                               style="font-size: 14px;" selectionMode="multiple" selection="#{resultadoBEAN.seleccionresultado}" rowKey="#{resultado.idresultado}"
+                                 liveResize="true"
+                                 
+                                 liveScroll="true" scrollRows="15" scrollWidth="100%"
+                                 scrollable="true"
+                                 
+                                 widgetVar="buscar"
+                                 filteredValue="#{resultadoBEAN.filterresultado}"
+                          emptyMessage="No hay elementos encontrados"
+                          paginator="true" rows="10"
+                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                          paginatorPosition="bottom">
+                
+                          <f:facet name="header">
+                              <div align="right" >
+                                <p:outputPanel class="text-right">
+                                   <h:outputText value="Buscar:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('buscar').filter();" 
+                                             
+                                             style="width:150px" />
+                                </p:outputPanel>
+                                  </div>
+                           </f:facet>
+                 <p:column headerText="NORMA"
+                               sortBy="#{resultado.categoria.tipo}"
+                            filterBy="#{resultado.categoria.tipo}"
+                          filterMatchMode="startsWith" 
+                          filterStyle="visibility:hidden; height:0" width="15">
+                     <center>
+                    <h:outputText value="#{resultado.categoria.tipo}" />
+                     </center>
+                </p:column>
+                       <p:column headerText="CALIFICACIÓN"
+                            sortBy="#{resultado.calificacion}"
+                            filterBy="#{resultado.calificacion}"
+                          filterMatchMode="startsWith" 
+                           filterStyle="visibility:hidden; height:0" 
+                           width="10">
+                           <center>
+                      <h:outputText value="#{resultado.calificacion}" />
+                           </center>
+                </p:column>
+                        <p:column headerText="ESTADO"
+                            sortBy="#{resultado.estatus}"
+                            filterBy="#{resultado.estatus}"
+                          filterMatchMode="startsWith" 
+                           filterStyle="visibility:hidden; height:0"
+                           width="10">
+                            <center>
+                    <h:outputText value="#{resultado.estatus}" />
+                    
+                            </center>
+                </p:column>
+                       <p:column headerText="FECHA"
+                            sortBy="#{resultado.fecha}"
+                            filterBy="#{resultado.fecha}"
+                          filterMatchMode="startsWith" 
+                           filterStyle="visibility:hidden; height:0"
+                           width="15">
+                           <center>
+                    <h:outputText value="#{resultado.fecha}" />
+                           </center>
+                </p:column>
+                <p:column headerText="ACIERTOS" 
+                          sortBy="#{resultado.res_acer}" 
+                          filterBy="#{resultado.res_acer}"
+                          filterMatchMode="startsWith"
+                          filterStyle="visibility:hidden; height:0"
+                          width="15">
+                          <center>
+                    <h:outputText value="#{resultado.res_acer}" />
+                          </center>
+                </p:column>
+                
+                <p:column headerText="INCORRECTO"
+                          sortBy="#{resultado.res_inc}"
+                          filterBy="#{resultado.res_inc}"
+                          filterMatchMode="startsWith" 
+                           filterStyle="visibility:hidden; height:0"
+                           width="20">
+                    <center>
+                    <h:outputText value="#{resultado.res_inc}" />
+                    </center>
+                </p:column>
+                
+                <p:column headerText="DESCARGAR"
+                          width="15">
+                    <center>
+                        <p:commandButton process="data" icon="fa fa-eye" actionListener="#" />
+                    </center>
+                </p:column>
+                
+                
+            </p:dataTable>
+                            
                   
                 </h:form>
             </ui:define>

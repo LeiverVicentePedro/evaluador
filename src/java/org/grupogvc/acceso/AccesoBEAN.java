@@ -6,6 +6,7 @@
 package org.grupogvc.acceso;
 
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -26,7 +27,9 @@ public class AccesoBEAN implements Serializable {
     public String getRedireccion() {
         return redireccion;
     }
-
+    public String URL(){
+        return redireccion;
+    }
     public void setRedireccion(String redireccion) {
         this.redireccion = redireccion;
     }
@@ -51,19 +54,31 @@ public class AccesoBEAN implements Serializable {
         try {
             if (new AccesoDAO().accesoPersonal(clave) != null) {
                 personal =new AccesoDAO().accesoPersonal(clave);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", personal);
-                
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("personal", personal);
+                System.out.println("nombre: "+personal.getNombre());
                 if(personal.getNivel()==1){
-                    
+                    setRedireccion("principalUno.xhtml");
                 }
                 if(personal.getNivel()==2){
-                    
-                }else{
-                    
+                    setRedireccion("principalDos.xhtml");
                 }
-            }
+            }else{
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Acceso Denegado","Clave no Valida."));
+                }
         } catch (Exception ex) {
             System.out.println("Error en AccesoBEAN -> accesoSistema: " + ex);
+        }
+    }
+    
+    public void exite() {
+        try {
+            FacesContext contexto = FacesContext.getCurrentInstance();
+            Personal usuarioVive = (Personal) contexto.getExternalContext().getSessionMap().get("personal");
+            if (usuarioVive == null) {
+                contexto.getExternalContext().redirect("index.xhtml");
+            }
+        } catch (Exception ex) {
+
         }
     }
 }

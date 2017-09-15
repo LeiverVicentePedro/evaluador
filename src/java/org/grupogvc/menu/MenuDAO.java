@@ -26,7 +26,7 @@ public class MenuDAO extends Conexion{
             consulta.setInt(1, nivelUsuario);
             resultado = consulta.executeQuery();
             
-            if(resultado.next()==true){
+            while(resultado.next()){
                 Menu menu = new Menu();
                 menu.setIdmenu(resultado.getInt("idmenu"));
                 menu.setNivel_usuaio(resultado.getInt("nivel_usuario"));

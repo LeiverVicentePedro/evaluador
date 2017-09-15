@@ -23,12 +23,13 @@
                             <h:panelGrid columns="1" style=" text-align: center">
                                 <h:column><br/></h:column>
                                 <p:outputLabel value="Clave de Usuario:"/>
-                                <p:inputText style="text-align: center;"/>
+                                <p:inputText style="text-align: center;" value="#{accesoBEAN.clave}"/>
                                 <h:column><br/></h:column>
-                                <p:commandButton value="Acceder" action="inicio.xhtml"/>
                                 <h:column><br/></h:column>
                             </h:panelGrid>
-
+                            <center>
+                            <p:commandButton value="Acceder"  action="#{accesoBEAN.URL()}" actionListener="#{accesoBEAN.accesoSistema()}" />
+                            </center>    
                         </p:panel>
                     </h:form>   
                 </div>
@@ -53,14 +54,8 @@
                     </p>
                 </b>
             </div>
-
-
-
         </div>
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        
     </h:body>
 </html>
 

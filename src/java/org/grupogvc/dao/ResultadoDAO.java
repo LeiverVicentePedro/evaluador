@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import org.grupogvc.modelo.Personal;
 
 /**
  *
@@ -76,6 +77,42 @@ public class ResultadoDAO extends Conexion{
          this.Cerrar();
      }
      return lista;
+    }
+     
+     public List<Resultado> listaResultadoUno(int usuario) throws Exception
+    {
+        List<Resultado> listaResultado;
+        ResultSet resultado;
+       try{
+           this.Conectar();
+           PreparedStatement consulta = this.getConexion().prepareStatement("SELECT * FROM resultado where idpersonal=?" );
+           consulta.setInt(1,usuario);
+           resultado = consulta.executeQuery();
+           listaResultado = new ArrayList();
+           while(resultado.next()){
+               Resultado resultadito = new Resultado();
+            resultadito.setIdresultado(resultado.getInt("idresultado"));
+            resultadito.setPersona(new PersonalDAO().buscarIdPersona(resultado.getInt("idpersonal")));
+            resultadito.setRes_acer(resultado.getInt("res_acer"));
+            resultadito.setRes_inc(resultado.getInt("res_inc"));
+            resultadito.setEstatus(resultado.getString("estatus"));
+            resultadito.setIntentos(resultado.getString("intentos"));
+            resultadito.setFecha(resultado.getDate("fecha"));
+            resultadito.setCalificacion(resultado.getDouble("calificacion"));
+            resultadito.setCategoria(new CategoriaDAO().buscarIdCategoria(resultado.getInt("idcategoria")));
+            
+            
+            listaResultado.add(resultadito);
+            
+           }
+   
+       }catch(Exception ex){
+           System.out.println("Error en ResultadoDAO -> listaResultado "+ex);
+           throw ex;
+       }finally{
+           this.Cerrar();
+       }
+       return listaResultado;
     }
      
      public Resultado elegirDatoResultado(Resultado resultado) throws Exception{

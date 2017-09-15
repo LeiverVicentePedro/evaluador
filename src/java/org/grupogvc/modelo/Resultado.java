@@ -5,13 +5,14 @@
  */
 package org.grupogvc.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Jerusalen
  */
-public class Resultado {
+public class Resultado implements Serializable {
     private int idresultado;
     private Personal persona;
     private int res_acer;

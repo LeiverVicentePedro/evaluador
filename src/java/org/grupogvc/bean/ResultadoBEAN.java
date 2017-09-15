@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.grupogvc.dao.ResultadoDAO;
+import org.grupogvc.modelo.Personal;
 import org.grupogvc.modelo.Resultado;
 
 /**
@@ -22,6 +23,7 @@ import org.grupogvc.modelo.Resultado;
 @ViewScoped
 public class ResultadoBEAN implements Serializable {
     private Resultado resultado=new Resultado();
+    private Personal persona=new Personal();
     private List<Resultado> listaresultado;
     private List<Resultado> filterresultado;
     private List<Resultado> seleccionresultado;
@@ -78,7 +80,16 @@ public class ResultadoBEAN implements Serializable {
             
         }
     }
+
+    public Personal getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Personal persona) {
+        this.persona = persona;
+    }
     
+         
      public void limpiarResultado(){
         this.resultado.setPersona(null);
         this.resultado.setRes_acer(0);

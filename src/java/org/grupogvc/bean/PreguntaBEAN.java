@@ -13,6 +13,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.grupogvc.dao.PreguntaDAO;
 import org.grupogvc.dao.RespuestaDAO;
+import org.grupogvc.modelo.Categoria;
 import org.grupogvc.modelo.Pregunta;
 import org.grupogvc.modelo.Respuesta;
 
@@ -30,6 +31,7 @@ public class PreguntaBEAN implements Serializable{
     private List<Pregunta> filterpregunta;
     private List<Pregunta> seleccionpregunta;
     private List<Respuesta> listarespuesta;
+    private List<Pregunta> listapreguntaNorma;
     private String accion;
    
     
@@ -89,6 +91,14 @@ public class PreguntaBEAN implements Serializable{
 
     public void setListarespuesta(List<Respuesta> listarespuesta) {
         this.listarespuesta = listarespuesta;
+    }
+
+    public List<Pregunta> getListapreguntaNorma() {
+        return listapreguntaNorma;
+    }
+
+    public void setListapreguntaNorma(List<Pregunta> listapreguntaNorma) {
+        this.listapreguntaNorma = listapreguntaNorma;
     }
     
     
@@ -187,6 +197,28 @@ public class PreguntaBEAN implements Serializable{
             throw e;
         }
     }
+     public void listaPreguntaNorma() {
+        PreguntaDAO preguntadao;
+
+        try {
+            preguntadao = new PreguntaDAO();
+            listapreguntaNorma = preguntadao.listarPreguntaNorma(pregunta.getCategoria().getIdCategoria());
+             for(Pregunta picono:listapreguntaNorma)
+            {
+                if(picono.getEstatus()==true)
+                {
+                    picono.setIcono("fa fa-ban");
+                    
+                }
+                else
+                {
+                    picono.setIcono("fa fa-check");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error en Pregunta BEAN -> listaPreguntaNorma " + e);
+        }
+    }
        public void listaRespuesta() throws Exception{
         RespuestaDAO respuestadao;
         try{
@@ -233,6 +265,7 @@ public class PreguntaBEAN implements Serializable{
                }
             this.inhabilitarPregunta();
             this.listarPregunta();
+            this.listaPreguntaNorma();
             }
         catch (Exception e){
             throw e;

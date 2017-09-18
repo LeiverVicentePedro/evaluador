@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.FacesComponent;
 import javax.faces.context.FacesContext;
 import org.grupogvc.modelo.Resultado;
+import org.grupogvc.reporte.ResultadoImpreso;
 
 /**
  *
@@ -33,6 +34,11 @@ public class FinExamenBEAN {
     }
     
     public void descargarComprobante(){
+        try{
         
+        new ResultadoImpreso().exportarPDFSolicitud(resultado);
+        }catch(Exception ex){
+         System.out.println("Error en Solicitud_mcBEAN -> crearPDF: "+ex);
+        }
     }
 }

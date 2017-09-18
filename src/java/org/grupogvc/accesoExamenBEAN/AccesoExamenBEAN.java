@@ -54,8 +54,8 @@ public class AccesoExamenBEAN {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No Permitido", "Evaluacion no Encotrada para esta Norma."));
                 redireccion = "accesoExamen.xhtml";
             } else if (evaluacion.getIdevaluacion() != null) {
-                if (evaluacion.getInicio().compareTo(new SimpleDateFormat("dd/MM/yyyy").format(new Date())) <= 0 && evaluacion.getFin().compareTo(new SimpleDateFormat("dd/MM/yyyy").format(new Date())) > 0) {
-                    if (evaluacion.getHoraIni().compareTo(new SimpleDateFormat("HH:mm:ss").format(new Date())) <= 0 && new SimpleDateFormat("HH:mm:ss").format(new Date()).compareTo(evaluacion.getHoraFin()) < 0) {
+                if (evaluacion.getInicio().compareTo(new SimpleDateFormat("dd/MM/yyyy").format(new Date())) <= 0 && evaluacion.getFin().compareTo(new SimpleDateFormat("dd/MM/yyyy").format(new Date())) >= 0) {
+                    if (evaluacion.getHoraIni().compareTo(new SimpleDateFormat("HH:mm:ss").format(new Date())) <= 0 && new SimpleDateFormat("HH:mm:ss").format(new Date()).compareTo(evaluacion.getHoraFin()) <= 0) {
                         if (evaluacion.getIntentos() == 0) {
                             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("evaluacion", evaluacion);
                             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contador", 0);

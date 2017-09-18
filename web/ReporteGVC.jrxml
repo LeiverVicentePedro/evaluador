@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b151c0ca-7f73-4800-9c5f-8f5e5141d6e2">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="145"/>
+	<property name="ireport.y" value="180"/>
 	<parameter name="normaEvaluacion" class="java.lang.String"/>
 	<parameter name="calificacion" class="java.lang.String"/>
 	<parameter name="nombre" class="java.lang.String"/>
@@ -21,15 +21,15 @@
 			</staticText>
 			<image>
 				<reportElement x="34" y="21" width="110" height="99" uuid="55f9e29b-0a28-4481-afc8-c3791227ab98"/>
-				<imageExpression><![CDATA["http://grupogvc.org/logo/logoReporte.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["resources/images/logoGVC.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<detail>
 		<band height="496" splitType="Stretch">
 			<staticText>
-				<reportElement x="144" y="88" width="275" height="24" uuid="ca6dfc3d-df15-40bf-a34f-7a5446799874"/>
-				<textElement>
+				<reportElement x="0" y="88" width="572" height="24" uuid="ca6dfc3d-df15-40bf-a34f-7a5446799874"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
 				<text><![CDATA[Resultado final de evaluación correspondiente a:]]></text>
@@ -42,7 +42,7 @@
 				<textFieldExpression><![CDATA[$P{normaEvaluacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="144" y="195" width="275" height="20" uuid="6d9b78d9-ef6e-499d-ae09-26b956d1cbd5"/>
+				<reportElement x="149" y="195" width="275" height="20" uuid="6d9b78d9-ef6e-499d-ae09-26b956d1cbd5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>

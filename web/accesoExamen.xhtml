@@ -15,8 +15,8 @@
                     <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/> 
                     <p:panel style="border: none;">
                         <h:panelGrid columns="1" style="text-align: center;">
-                            <p:outputLabel value="Seleccione la Norma a Evaluar"/>
-                            <p:selectOneMenu value="#{accesoExamenBEAN.categoria}" converter="omnifaces.SelectItemsConverter" 
+                            <p:outputLabel value="Seleccione la Norma a Evaluar" for="norma"/>
+                            <p:selectOneMenu id="norma" value="#{accesoExamenBEAN.categoria}" converter="omnifaces.SelectItemsConverter" 
                                          styleClass="selectMenu" required="true" requiredMessage="Se Requiere Categoria"
                                          style="text-transform: uppercase; height:30px; width:250px">
                             <f:selectItem noSelectionOption="true" itemLabel="Seleccione" itemValue="#{null}"/>

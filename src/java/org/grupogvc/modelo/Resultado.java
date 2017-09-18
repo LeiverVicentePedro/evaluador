@@ -18,7 +18,6 @@ public class Resultado implements Serializable {
     private int res_acer;
     private int res_inc;
     private String estatus;
-    private String intentos;
     private Date fecha;
     private Double calificacion;
     private Categoria categoria;
@@ -87,14 +86,6 @@ public class Resultado implements Serializable {
 
     public void setEstatus(String estatus) {
         this.estatus = estatus;
-    }
-
-    public String getIntentos() {
-        return intentos;
-    }
-
-    public void setIntentos(String intentos) {
-        this.intentos = intentos;
     }
 
     public Date getFecha() {

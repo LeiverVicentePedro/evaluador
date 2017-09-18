@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <f:event type="preRenderView" listener="#{finExamenBEAN.llenaResultado()}"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:separator style="visibility:hidden;"/>
+                 <p:separator style="visibility:hidden;"/>
+                <p:outputLabel value="A Concluido su evaluación, a continuación se le muestra el resultado obtenido:"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:outputLabel value="Calificación"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:outputLabel value="#{finExamenBEAN.resultado.calificacion}" style="font-size: 30px; font-family: sans-serif; font-weight: bold;"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:outputLabel value="En esta Evaluación usted se Encuentra "/>
+                <p:outputLabel value="#{finExamenBEAN.resultado.estatus}" style="font-size: 18px; font-weight: bold;"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:outputLabel value="Si Desea Descargar su comprobante de Click en el Siguiente Boton"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:commandButton value="Descargar" icon="fa fa-download"/>
+                <p:separator style="visibility:hidden;"/>
+                <p:separator style="visibility:hidden;"/>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

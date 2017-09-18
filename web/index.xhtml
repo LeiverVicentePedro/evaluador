@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Inicio</title>
     </h:head>
@@ -18,18 +19,21 @@
                 <p:separator style="width: 80%; visibility: hidden; border-bottom: 30px;"/>
                 <div>
                     <h:form>
-                        <p:panel header="Acceso" style="background: #ccccff; border-radius:0 0 3em 3em; border: solid #0000ff 0.3em; width: 30%;">
 
+                        <p:panel id="panel" header="Acceso" style="background: #ccccff; border-radius:0 0 3em 3em; border: solid #0000ff 0.3em; width: 30%;">
+                            <p:focus context="panel"/>
                             <h:panelGrid columns="1" style=" text-align: center">
                                 <h:column><br/></h:column>
                                 <p:outputLabel value="Clave de Usuario:"/>
-                                <p:inputText style="text-align: center;" value="#{accesoBEAN.clave}"/>
+                                <p:inputText style="text-align: center;" value="#{accesoBEAN.clave}" required="true" requiredMessage="Ingrese su Clave para el Sistema."/>
                                 <h:column><br/></h:column>
                                 <h:column><br/></h:column>
                             </h:panelGrid>
                             <center>
-                                <p:commandButton value="Iniciar"  action="#{accesoBEAN.URL()}" actionListener="#{accesoBEAN.accesoSistema()}" class="boton" />
-                            </center>    
+                                <p:commandButton value="Iniciar"  action="#{accesoBEAN.URL()}" actionListener="#{accesoBEAN.accesoSistema()}" class="boton" update="@parent" />
+                                  
+                            </center>
+                            
                         </p:panel>
                     </h:form>   
                 </div>
@@ -55,7 +59,7 @@
                 </b>
             </div>
         </div>
-        
+
     </h:body>
 </html>
 

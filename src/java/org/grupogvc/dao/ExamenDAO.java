@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import org.grupogvc.conexion.Conexion;
-import org.grupogvc.modelo.Categoria;
+import org.grupogvc.modelo.Evaluacion;
 import org.grupogvc.modelo.Examen;
 
 /**
@@ -19,22 +19,24 @@ import org.grupogvc.modelo.Examen;
  */
 public class ExamenDAO extends Conexion{
     
-    public List listarPreguntas(Categoria categoria) throws Exception{
+    public List listarPreguntas(Evaluacion evaluacion) throws Exception{
         List<Examen> listaEvaluacion = new ArrayList<Examen>();
         try{
             this.Conectar();
             PreparedStatement consulta = this.getConexion().prepareStatement("SELECT idpregunta,idrespuesta FROM  respuesta INNER JOIN pregunta ON pregunta.idpregunta=respuesta.idrespuesta WHERE idcategoria=? order by rand() limit ?");
-            consulta.setInt(1, categoria.getIdCategoria());
+            consulta.setInt(1, evaluacion.getIdevaluacion().getIdCategoria());
+            consulta.setInt(2, evaluacion.getNum_preguntas());
+            
             ResultSet resultado = consulta.executeQuery();
             
             while(resultado.next()){
-                Examen evaluacion = new Examen();
-                evaluacion.setPregunta(new PreguntaDAO().buscarIdPregunta(resultado.getInt("idpregunta")));
-                //evaluacion.setRespuesta(new RespuestaDAO().buscarIdRespuesta(resultado.getInt("idrespuesta")));
-                listaEvaluacion.add(evaluacion);
+                Examen examen = new Examen();
+                examen.setPregunta(new PreguntaDAO().buscarIdPregunta(resultado.getInt("idpregunta")));
+                examen.setRespuesta(new RespuestaDAO().buscarIdRespuesta(resultado.getString("idrespuesta")));
+                listaEvaluacion.add(examen);
             }
         }catch(Exception ex){
-            System.out.println("Error en EvaluacionDAO -> listarPregunta: "+ex);
+            System.out.println("Error en ExamenDAO -> listarPregunta: "+ex);
         }finally{
             this.Cerrar();
         }

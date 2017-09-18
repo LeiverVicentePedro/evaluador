@@ -104,7 +104,6 @@ public class ResultadoBEAN implements Serializable {
         this.resultado.setRes_acer(0);
         this.resultado.setRes_inc(0);
         this.resultado.setEstatus("");
-        this.resultado.setIntentos("");
         
        
     }

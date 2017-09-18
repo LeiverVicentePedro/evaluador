@@ -22,16 +22,15 @@ public class ResultadoDAO extends Conexion{
     public void registrarResultado(Resultado resultadoregistra) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta= this.getConexion().prepareStatement("INSERT INTO resultado (idpersonal,res_acer,res_inc,estatus,intentos,fecha,calificacion,idcategoria) values(?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta= this.getConexion().prepareStatement("INSERT INTO resultado (idpersonal,res_acer,res_inc,estatus,fecha,calificacion,idcategoria) values(?,?,?,?,?,?,?)");
           
              consulta.setInt(1, resultadoregistra.getPersona().getIdpersonal());
             consulta.setInt(2,resultadoregistra.getRes_acer());
             consulta.setInt(3,resultadoregistra.getRes_inc());
-            consulta.setString(4,resultadoregistra.getEstatus());
-            consulta.setString(5,resultadoregistra.getIntentos());
-            consulta.setDate(6,(Date)resultadoregistra.getFecha());
-            consulta.setDouble(7,resultadoregistra.getCalificacion());
-            consulta.setInt(8,resultadoregistra.getCategoria().getIdCategoria());
+            consulta.setString(4,resultadoregistra.getEstatus());          
+            consulta.setDate(5,(Date)resultadoregistra.getFecha());
+            consulta.setDouble(6,resultadoregistra.getCalificacion());
+            consulta.setInt(7,resultadoregistra.getCategoria().getIdCategoria());
             
            
             consulta.executeUpdate();
@@ -61,8 +60,6 @@ public class ResultadoDAO extends Conexion{
              resultado.setRes_acer(resultadoset.getInt("res_acer"));
              resultado.setRes_inc(resultadoset.getInt("res_inc"));
              resultado.setEstatus(resultadoset.getString("estatus"));
-             resultado.setEstatus(resultadoset.getString("estatus"));
-             resultado.setIntentos(resultadoset.getString("intentos"));
              resultado.setFecha(resultadoset.getDate("fecha"));
              resultado.setCalificacion(resultadoset.getDouble("calificacion"));
              resultado.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadoset.getInt("idcategoria"))));
@@ -96,7 +93,6 @@ public class ResultadoDAO extends Conexion{
             resultadito.setRes_acer(resultado.getInt("res_acer"));
             resultadito.setRes_inc(resultado.getInt("res_inc"));
             resultadito.setEstatus(resultado.getString("estatus"));
-            resultadito.setIntentos(resultado.getString("intentos"));
             resultadito.setFecha(resultado.getDate("fecha"));
             resultadito.setCalificacion(resultado.getDouble("calificacion"));
             resultadito.setCategoria(new CategoriaDAO().buscarIdCategoria(resultado.getInt("idcategoria")));
@@ -132,8 +128,6 @@ public class ResultadoDAO extends Conexion{
              resultadodos.setRes_acer(resultadoset.getInt("res_acer"));
              resultadodos.setRes_inc(resultadoset.getInt("res_inc"));
              resultadodos.setEstatus(resultadoset.getString("estatus"));
-             resultadodos.setEstatus(resultadoset.getString("estatus"));
-             resultadodos.setIntentos(resultadoset.getString("intentos"));
              resultadodos.setFecha(resultadoset.getDate("fecha"));
              resultadodos.setCalificacion(resultadoset.getDouble("calificacion"));
              resultadodos.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadoset.getInt("idcategoria"))));
@@ -165,8 +159,6 @@ public class ResultadoDAO extends Conexion{
              resultadobusca.setRes_acer(resultadosetbusca.getInt("res_acer"));
              resultadobusca.setRes_inc(resultadosetbusca.getInt("res_inc"));
              resultadobusca.setEstatus(resultadosetbusca.getString("estatus"));
-             resultadobusca.setEstatus(resultadosetbusca.getString("estatus"));
-             resultadobusca.setIntentos(resultadosetbusca.getString("intentos"));
              resultadobusca.setFecha(resultadosetbusca.getDate("fecha"));
              resultadobusca.setCalificacion(resultadosetbusca.getDouble("calificacion"));
              resultadobusca.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadosetbusca.getInt("idcategoria"))));

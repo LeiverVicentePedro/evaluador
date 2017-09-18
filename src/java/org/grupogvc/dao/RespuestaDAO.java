@@ -128,7 +128,7 @@ public class RespuestaDAO extends Conexion{
                 consulta.setString(1,idrespuesta);
             resultadosetbusca=consulta.executeQuery();
             if(resultadosetbusca.next()){
-           respuestabusca.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadosetbusca.getInt("idpregunta"))));
+           respuestabusca.setRespuesta(new PreguntaDAO().buscarIdPregunta((resultadosetbusca.getInt("idrespuesta"))));
               respuestabusca.setCorrecto(resultadosetbusca.getString("correcto"));
               respuestabusca.setIncorrecto1(resultadosetbusca.getString("incorrecto1"));
               respuestabusca.setIncorrecto2(resultadosetbusca.getString("incorrecto2")); }

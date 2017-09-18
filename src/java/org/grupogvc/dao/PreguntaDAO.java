@@ -66,6 +66,35 @@ public class PreguntaDAO extends Conexion{
      return lista;
     }
      
+      public List<Pregunta> listarPreguntaNorma(int cat) throws Exception{//
+     List<Pregunta> lista;
+        ResultSet resultadoset;
+     try{
+         this.Conectar();
+         PreparedStatement consulta=this.getConexion().prepareCall("SELECT * FROM pregunta where idcategoria=?");
+         consulta.setInt(1,cat);
+         resultadoset= consulta.executeQuery();
+         lista =new ArrayList();
+         while(resultadoset.next()){
+             Pregunta pregunta=new Pregunta();
+             pregunta.setIdpregunta(resultadoset.getInt("idpregunta"));
+             pregunta.setPregunta(resultadoset.getString("pregunta"));
+             pregunta.setCategoria(new CategoriaDAO().buscarIdCategoria((resultadoset.getInt("idcategoria"))));
+             pregunta.setEstatus(resultadoset.getBoolean("estatus"));
+             
+             lista.add(pregunta);
+         }
+     }
+     catch(Exception e){
+          System.out.println("error en Pregunta DAO -->Listar Pregunta norma"+"/n");
+          throw e;
+     }
+     finally{
+         this.Cerrar();
+     }
+     return lista;
+    }
+     
      public Pregunta elegirDatoPregunta(Pregunta pregunta) throws Exception{
         Pregunta preguntados=null;
         ResultSet resultadoset;

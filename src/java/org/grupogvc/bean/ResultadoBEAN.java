@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.grupogvc.dao.ResultadoDAO;
 import org.grupogvc.modelo.Personal;
 import org.grupogvc.modelo.Resultado;
+import org.grupogvc.reporte.ResultadoImpreso;
 
 /**
  *
@@ -166,6 +167,15 @@ public class ResultadoBEAN implements Serializable {
             throw e;
         }
         
+    }
+    
+     public void crearPDF(Resultado resultado){
+        try{
+        
+        new ResultadoImpreso().exportarPDFSolicitud(resultado);
+        }catch(Exception ex){
+         System.out.println("Error en Solicitud_mcBEAN -> crearPDF: "+ex);
+        }
     }
     
   

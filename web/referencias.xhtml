@@ -18,7 +18,7 @@
                     <p:outputLabel value="Lista de Referencias" class="titulo"/>
                     <p:separator style="visibility: hidden;"/>
                     <div align="left">
-                        <p:commandButton value="Nuevo" oncomplete="PF('dialogoReferencias').show();" class="boton"/>
+                        <p:commandButton value="Nuevo" oncomplete="PF('dialogoReferencias').show();"/>
                     </div>
                     <p:separator style="visibility: hidden;"/>
                     <p:dataTable id="data" value="#{referenciaBEAN.listaReferencia}" var="referencia" style="font-size: 14px;" selectionMode="multiple" selection="#{referenciaBEAN.referenciaSeleccionada}" rowKey="#{referencia.idReferencia}"

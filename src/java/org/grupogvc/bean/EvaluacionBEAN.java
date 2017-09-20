@@ -5,7 +5,6 @@
  */
 package org.grupogvc.bean;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +22,11 @@ import org.grupogvc.modelo.Evaluacion;
  */
 @ManagedBean
 @ViewScoped
-public class EvaluacionesBEAN implements Serializable{
+public class EvaluacionBEAN {
+    Evaluacion evaluacion = new org.grupogvc.modelo.Evaluacion();
     
-    Evaluacion evaluacion = new Evaluacion();
-    
-    List<Evaluacion> listaEvaluacion = new ArrayList<>();
-    List<Evaluacion> filtroEvaluacion = new ArrayList<>();
+    List<org.grupogvc.modelo.Evaluacion> listaEvaluacion = new ArrayList<>();
+    List<org.grupogvc.modelo.Evaluacion> filtroEvaluacion = new ArrayList<>();
     Evaluacion evaluacionSeleccionada = new Evaluacion();
     
     private String accion;
@@ -48,7 +46,7 @@ public class EvaluacionesBEAN implements Serializable{
         this.evaluacion = evaluacion;
     }
 
-    public List<Evaluacion> getListaEvaluacion() {
+    public List<org.grupogvc.modelo.Evaluacion> getListaEvaluacion() {
         return listaEvaluacion;
     }
 
@@ -56,7 +54,7 @@ public class EvaluacionesBEAN implements Serializable{
         this.listaEvaluacion = listaEvaluacion;
     }
 
-    public List<Evaluacion> getFiltroEvaluacion() {
+    public List<org.grupogvc.modelo.Evaluacion> getFiltroEvaluacion() {
         return filtroEvaluacion;
     }
 
@@ -100,6 +98,7 @@ public class EvaluacionesBEAN implements Serializable{
    
     public void listarEvaluacion(){
         try{
+            System.out.println("entro a listar Evaluacion");
            listaEvaluacion = evaluacionDao.listarEvaluacion();
         }catch(Exception ex){
             System.out.println("Error en EvaluacionBEAN -> listarEvaluacion: "+ex);
@@ -110,9 +109,17 @@ public class EvaluacionesBEAN implements Serializable{
         try{
            evaluacion.setInicio(new SimpleDateFormat("dd/MM/yyyy").format(inicio));
            evaluacion.setFin(new SimpleDateFormat("dd/MM/yyyy").format(fin));
-            evaluacionDao.agregarEvaluacion(evaluacion);
+           
+           if(new EvaluacionDAO().buscaEvaluacionPorId(evaluacion.getIdevaluacion().getIdCategoria()).getIdevaluacion()==null){
+                evaluacionDao.agregarEvaluacion(evaluacion);
+                
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Informacion", "Evaluacion Agregada."));
+           }else{
+                evaluacionDao.actualizarEvaluacion(evaluacion);
+               
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Informacion", "Evaluacion Actualizada."));
+           }
             
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Informacion", "Evaluacion Registrada."));
         }catch(Exception ex){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Aviso", "Ocurrio un Error al Registrar Evaluación."));
             System.out.println("Error en EvaluacionBEAN -> agregarEvaluacion: "+ex);
@@ -151,11 +158,12 @@ public class EvaluacionesBEAN implements Serializable{
         {
             case "Generar":
                 this.agregarEvaluacion();
+                this.listarEvaluacion();
                 this.limpiarEvaluacion();
-                
                 break;
             case "Modificar":
                 this.actualizarEvaluacion();
+                this.listarEvaluacion();
                 this.limpiarEvaluacion();
                
                 break;

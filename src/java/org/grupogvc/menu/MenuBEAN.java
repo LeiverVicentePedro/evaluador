@@ -23,7 +23,7 @@ import org.primefaces.model.menu.MenuModel;
  */
 @ManagedBean
 @SessionScoped
-public class MenuBEAN implements Serializable{
+public class MenuBEAN{
     
     private MenuModel menuPrincipal;
     private List<Menu> listaMenu;

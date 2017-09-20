@@ -42,7 +42,7 @@ public class DatoEvaluanteDAO extends Conexion{
     public void registrarDatoEvaluante(DatosEvaluante dato) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta = this.getConexion().prepareStatement("INSERT INTO dato_evaluante(idevaluante,norma,intento) VALUES(?,?,?)");
+            PreparedStatement consulta = this.getConexion().prepareStatement("INSERT INTO dato_evaluante(idevaluante,norma,intentos) VALUES(?,?,?)");
             consulta.setInt(1,dato.getIdevaluante().getIdpersonal());
             consulta.setInt(2,dato.getNorma().getIdCategoria());
             consulta.setInt(3, dato.getIntento());
@@ -57,7 +57,7 @@ public class DatoEvaluanteDAO extends Conexion{
     public void actualizarDatoEvaluante(DatosEvaluante dato) throws Exception{
         try{
             this.Conectar();
-            PreparedStatement consulta = this.getConexion().prepareStatement("UPDATE dato_evaluante SET idevaluante=?, norma=?, intento=? where id=?");
+            PreparedStatement consulta = this.getConexion().prepareStatement("UPDATE dato_evaluante SET idevaluante=?, norma=?, intentos=? where id=?");
             consulta.setInt(1,dato.getIdevaluante().getIdpersonal());
             consulta.setInt(2,dato.getNorma().getIdCategoria());
             consulta.setInt(3, dato.getIntento());

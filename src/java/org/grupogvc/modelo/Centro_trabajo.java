@@ -5,11 +5,13 @@
  */
 package org.grupogvc.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Jerusalen
  */
-public class Centro_trabajo {
+public class Centro_trabajo implements Serializable{
     private int idcent_trab;
     private String lugar;
     private Estado estado;

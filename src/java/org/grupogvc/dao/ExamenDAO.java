@@ -23,7 +23,7 @@ public class ExamenDAO extends Conexion{
         List<Examen> listaEvaluacion = new ArrayList<Examen>();
         try{
             this.Conectar();
-            PreparedStatement consulta = this.getConexion().prepareStatement("SELECT idpregunta,idrespuesta FROM  respuesta INNER JOIN pregunta ON pregunta.idpregunta=respuesta.idrespuesta WHERE idcategoria=? order by rand() limit ?");
+            PreparedStatement consulta = this.getConexion().prepareStatement("SELECT idpregunta,idrespuesta FROM  respuesta INNER JOIN pregunta ON pregunta.idpregunta=respuesta.idrespuesta WHERE idcategoria=? and estatus=1 order by rand() limit ?");
             consulta.setInt(1, evaluacion.getIdevaluacion().getIdCategoria());
             consulta.setInt(2, evaluacion.getNum_preguntas());
             

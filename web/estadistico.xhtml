@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/plantilla.xhtml">
+
+            <ui:define name="content">
+                <p:separator style="visibility: hidden;"/>
+                <center>
+                    <p:outputLabel value="Estadistico" style="font-size: 25px;" />
+                </center>
+                <p:separator/> 
+                <p:separator style="visibility: hidden;"/>
+
+                <h:form id="formEstadistica">
+                   <h:panelGrid columns="4">
+                            <p:outputLabel value="Año: " style="font-size: 13px" />
+                            <p:selectOneMenu value="#{estadisticoBEAN.anio}" styleClass="selectMenu" label="TipoEstatus" style="height:30px;width:200px">
+                                 <f:selectItem itemLabel="2016" itemValue="2016"/>
+                                 <f:selectItem itemLabel="2017" itemValue="2017"/>
+                                </p:selectOneMenu>                        
+              
+                            <p:commandButton value="Mostrar" actionListener="#{estadisticoBEAN.listarEstadistico()}"  update="deptoTable"/>
+                         </h:panelGrid>
+                    <p:dataTable var="resultado" value="#{estadisticoBEAN.listarestadisticoResultado}" 
+                                 paginator="true" rows="10"
+                                 widgetVar="buscar"
+                                 emptyMessage="No hay elementos encontrados"
+                                 filteredValue="#{estadisticoBEAN.listarestadisticofilter}"
+                         
+                                  paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                          paginatorPosition="bottom"
+                          style="margin-bottom:20px"  id="deptoTable">
+                         <f:facet name="header">
+                                <p:outputPanel class="text-right">
+                                   <h:outputText value="Buscar:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('buscar').filter();" 
+                                             
+                                             style="width:150px" />
+                                </p:outputPanel>
+                           </f:facet>
+                        <p:column headerText="Categoría"
+                                  filterBy="#{resultado.categoria}" width="150" filterMatchMode="startsWith">
+                            <h:outputText value="#{resultado.categoria.tipo}" />
+                        </p:column>
+                        <p:column headerText="Promedio" filterBy="#{resultado.promedio}" width="50" filterMatchMode="startsWith">
+                            <h:outputText value="#{resultado.promedio}" />
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="Graficar" actionListener="#{estadisticoBEAN.graficar}"  update="panel"/>
+                    <h:panelGrid id="panel">
+                        <p:chart type="bar" model="#{estadisticoBEAN.barra}" style="width: 800px; height: 500px" rendered="#{estadisticoBEAN.barra !=null}"/>
+                    </h:panelGrid>
+                    
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

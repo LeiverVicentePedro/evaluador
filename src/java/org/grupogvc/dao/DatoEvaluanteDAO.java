@@ -69,4 +69,17 @@ public class DatoEvaluanteDAO extends Conexion{
             this.Cerrar();
         }
     }
+    
+    public void eliminarEvaluantes(int idNorma){
+        try{
+            this.Conectar();
+            PreparedStatement elimina = this.getConexion().prepareStatement("DELETE FROM dato_evaluante where norma=?");
+            elimina.setInt(1, idNorma);
+            elimina.executeUpdate();
+        }catch(Exception ex){
+            System.out.println("Error en DatoEvaluante -> eliminarEvaluantes: "+ex);
+        }finally{
+            
+        }
+    }
 }

@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.grupogvc.dao.DatoEvaluanteDAO;
 import org.grupogvc.dao.EvaluacionDAO;
 import org.grupogvc.modelo.Evaluacion;
 
@@ -112,11 +113,11 @@ public class EvaluacionBEAN {
            
            if(new EvaluacionDAO().buscaEvaluacionPorId(evaluacion.getIdevaluacion().getIdCategoria()).getIdevaluacion()==null){
                 evaluacionDao.agregarEvaluacion(evaluacion);
-                
+                new DatoEvaluanteDAO().eliminarEvaluantes(evaluacion.getIdevaluacion().getIdCategoria());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Informacion", "Evaluacion Agregada."));
            }else{
                 evaluacionDao.actualizarEvaluacion(evaluacion);
-               
+                new DatoEvaluanteDAO().eliminarEvaluantes(evaluacion.getIdevaluacion().getIdCategoria());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Informacion", "Evaluacion Actualizada."));
            }
             

@@ -49,9 +49,36 @@
                                sortBy="#{resultado.categoria.tipo}"
                             filterBy="#{resultado.categoria.tipo}"
                           filterMatchMode="startsWith" 
-                          filterStyle="visibility:hidden; height:0" width="15">
+                          filterStyle="visibility:hidden; height:0" width="10">
                      <center>
                     <h:outputText value="#{resultado.categoria.tipo}" />
+                     </center>
+                </p:column>
+                    <p:column headerText="NOMBRE"
+                              sortBy="#{resultado.persona.nombre}"
+                              filterBy="#{resultado.persona.nombre}"
+                          filterMatchMode="startsWith" 
+                          filterStyle="visibility:hidden; height:0" width="5">
+                     <center>
+                         <h:outputText value="#{resultado.persona.nombre}" />
+                     </center>
+                </p:column>
+                     <p:column headerText="PATERNO"
+                               sortBy="#{resultado.persona.apat}"
+                              filterBy="#{resultado.persona.apat}"
+                          filterMatchMode="startsWith" 
+                          filterStyle="visibility:hidden; height:0" width="5">
+                     <center>
+                         <h:outputText value="#{resultado.persona.apat}" />
+                     </center>
+                </p:column>
+                     <p:column headerText="MATERNO"
+                               sortBy="#{resultado.persona.amat}"
+                               filterBy="#{resultado.persona.amat}"
+                          filterMatchMode="startsWith" 
+                          filterStyle="visibility:hidden; height:0" width="5">
+                     <center>
+                         <h:outputText value="#{resultado.persona.amat}" />
                      </center>
                 </p:column>
                        <p:column headerText="CALIFICACIÓN"
@@ -59,7 +86,7 @@
                             filterBy="#{resultado.calificacion}"
                           filterMatchMode="startsWith" 
                            filterStyle="visibility:hidden; height:0" 
-                           width="10">
+                           width="12">
                            <center>
                       <h:outputText value="#{resultado.calificacion}" />
                            </center>
@@ -69,7 +96,7 @@
                             filterBy="#{resultado.estatus}"
                           filterMatchMode="startsWith" 
                            filterStyle="visibility:hidden; height:0"
-                           width="10">
+                           width="8">
                             <center>
                     <h:outputText value="#{resultado.estatus}" />
                     
@@ -80,7 +107,7 @@
                             filterBy="#{resultado.fecha}"
                           filterMatchMode="startsWith" 
                            filterStyle="visibility:hidden; height:0"
-                           width="15">
+                           width="10">
                            <center>
                     <h:outputText value="#{resultado.fecha}" />
                            </center>
@@ -90,7 +117,7 @@
                           filterBy="#{resultado.res_acer}"
                           filterMatchMode="startsWith"
                           filterStyle="visibility:hidden; height:0"
-                          width="15">
+                          width="10">
                           <center>
                     <h:outputText value="#{resultado.res_acer}" />
                           </center>
@@ -108,7 +135,7 @@
                 </p:column>
                 
                 <p:column headerText="DESCARGAR"
-                          width="15">
+                          width="20">
                     <center>
                         <p:commandButton process="data" icon="fa fa-eye" actionListener="#{resultadoBEAN.crearPDF(resultado)}" ajax="false" />
                     </center>

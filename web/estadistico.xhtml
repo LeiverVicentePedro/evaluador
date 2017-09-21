@@ -21,11 +21,11 @@
                 <h:form id="formEstadistica">
                    <h:panelGrid columns="4">
                             <p:outputLabel value="Año: " style="font-size: 13px" />
-                            <p:selectOneMenu value="#{estadisticoBEAN.anio}" styleClass="selectMenu" label="TipoEstatus" style="height:30px;width:200px">
+                            <!--<p:selectOneMenu value="#{estadisticoBEAN.anio}" editable="true" styleClass="selectMenu" label="TipoEstatus" style="height:30px;width:200px">
                                  <f:selectItem itemLabel="2016" itemValue="2016"/>
                                  <f:selectItem itemLabel="2017" itemValue="2017"/>
-                                </p:selectOneMenu>                        
-              
+                                </p:selectOneMenu>       -->                 
+                            <p:spinner value="#{estadisticoBEAN.anio}" min="2015" max="2050" required="true" requiredMessage="Se necesita el año" placeholder="aaaa"/>
                             <p:commandButton value="Mostrar" actionListener="#{estadisticoBEAN.listarEstadistico()}"  update="deptoTable"/>
                          </h:panelGrid>
                     <p:dataTable var="resultado" value="#{estadisticoBEAN.listarestadisticoResultado}" 

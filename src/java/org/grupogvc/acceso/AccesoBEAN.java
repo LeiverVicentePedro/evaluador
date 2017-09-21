@@ -62,7 +62,7 @@ public class AccesoBEAN implements Serializable {
     
     public void accesoSistema() {
         try {
-            if (new AccesoDAO().accesoPersonal(clave) != null) {
+            if (new AccesoDAO().accesoPersonal(clave).getCentro() != null) {
                 personal =new AccesoDAO().accesoPersonal(clave);
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("personal", personal);
                 System.out.println("nombre: "+personal.getNombre());

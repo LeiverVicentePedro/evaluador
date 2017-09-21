@@ -16,7 +16,18 @@ public class Centro_trabajo implements Serializable{
     private String lugar;
     private Estado estado;
     private Boolean estatus;
+    private String icono;
 
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+    
+    
+    
     public int getIdcent_trab() {
         return idcent_trab;
     }

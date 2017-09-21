@@ -124,7 +124,7 @@ public class CategoriaBEAN implements Serializable {
         }
 
     }
-
+/*
     public void bajaCategoria(Categoria categoriaBaja) throws Exception {
 
         try {
@@ -139,10 +139,66 @@ public class CategoriaBEAN implements Serializable {
             System.out.println("Error en CategoriaBEAN -> bajaCategoria: "+ex);
         }
     }
-
+*/
+     public void elegirDatoCategoriaInhabilitar(Categoria cateDato) throws Exception{
+        CategoriaDAO catedao;
+        Categoria cateTemporal;
+        try{
+            catedao= new CategoriaDAO();
+            cateTemporal=catedao.buscarIdCategoria(cateDato.getIdCategoria());
+            
+            if(cateTemporal != null){
+                this.categoria = cateTemporal;
+               }
+            
+            this.inhabilitarCategoria();
+            this.listarCategorias();
+            }
+        catch (Exception e){
+            throw e;
+        }
+        
+    }
+    public void inhabilitarCategoria() throws Exception{
+        CategoriaDAO catedao;
+            try{
+                catedao= new CategoriaDAO();
+                if(categoria.getEstatus()==true){
+                categoria.setEstatus(false);
+                catedao.modificarCategoria(categoria);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Categoria Inhabilitada."));
+                    }
+                else
+                {
+                    if(categoria.getEstatus()==false){
+                categoria.setEstatus(true);
+                catedao.modificarCategoria(categoria);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Categoria Habilitada."));
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+    }
+    
     public void listarCategorias() {
+        CategoriaDAO catedao;
         try {
-            listaCategoria = categoriaDao.listarCategoria();
+            catedao=new CategoriaDAO();
+            listaCategoria = catedao.listarCategoria();
+             for(Categoria picono:listaCategoria)
+            {
+                if(picono.getEstatus()==true)
+                {
+                    picono.setIcono("fa fa-ban");
+                }
+                else
+                {
+                    picono.setIcono("fa fa-check");
+                }
+            }
         } catch (Exception ex) {
             System.out.println("Error en CategoriaBEAN -> listarCategorias: " + ex);
         }

@@ -20,8 +20,8 @@
                     </center>
             <p:separator style="visibility: hidden;"/> 
             <div align="justify">
-                <p:commandButton value="Nuevo" oncomplete="PF('DatosUsuario').show();" actionListener="#{personalBEAN.setAccion('Registrar')}" 
-                                 update=":dialogoUsuario" class="boton" >         
+                <p:commandButton class="boton" value="Nuevo" icon="fa fa-plus-circle" style="text-align: left;" oncomplete="PF('DatosUsuario').show();" actionListener="#{personalBEAN.setAccion('Registrar')}" 
+                                 update=":dialogoUsuario">         
             
                     <f:ajax execute="#{personalBEAN.listarPersona()}" render="data" />
             </p:commandButton>
@@ -148,7 +148,7 @@
                 <p:column headerText="CAMBIAR ESTADO"
                           width="23" style="font-size:13px">
                     <center>
-                        <p:commandButton process="data" icon="fa fa-refresh" actionListener="#{personalBEAN.bajaPersona(persona)}" update="data"/>
+                        <p:commandButton process="data" icon="#{persona.icono}" actionListener="#{personalBEAN.elegirDatoPersonalInhabilitar(persona)}" update="data"/>
                     </center>
                 </p:column>
             </p:dataTable>

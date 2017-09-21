@@ -24,6 +24,17 @@ public class Personal implements Serializable{
     private String correoElectronico;
     private Boolean estatus;
     private int nivel;
+    private String icono;
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+    
+    
 
     public int getIdpersonal() {
         return idpersonal;

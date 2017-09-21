@@ -126,6 +126,17 @@ public class EstadoBEAN implements Serializable{
         try{
             estadodao=new EstadoDAO();
             listaestado = estadodao.listarEstado();
+             for(Estado picono:listaestado)
+            {
+                if(picono.getEstatus()==true)
+                {
+                    picono.setIcono("fa fa-ban");
+                }
+                else
+                {
+                    picono.setIcono("fa fa-check");
+                }
+            }
         }
         catch(Exception e){
             throw e;
@@ -150,36 +161,46 @@ public class EstadoBEAN implements Serializable{
         
     }
     
-     public void elegirDatoEstadoBaja(Estado estadoElegirDato) throws Exception{//esto es para dar de baja primero se elige el dato y despues se pone en inactivo
+     public void elegirDatoEstadoInhabilitar(Estado estadoDato) throws Exception{
         EstadoDAO estadodao;
         Estado estadoTemporal;
         try{
             estadodao= new EstadoDAO();
-            estadoTemporal=estadodao.elegirDatoEstado(estadoElegirDato);
+            estadoTemporal=estadodao.elegirDatoEstado(estadoDato);
             
             if(estadoTemporal != null){
                 this.estado = estadoTemporal;
-            }
-            this.bajaEstado();//se manda a llamar al metodo dar de baja para q se modifique el estatus por INACTIVO
-            this.listarEstado();//para actualizar la tabla y se vea reflejado el cambio de estatus
+               }
+            
+            this.inhabilitarEstado();
+            this.listarEstado();
             }
         catch (Exception e){
             throw e;
         }
         
     }
-     public void bajaEstado() throws Exception{
+    public void inhabilitarEstado() throws Exception{
         EstadoDAO estadodao;
             try{
                 estadodao= new EstadoDAO();
+                if(estado.getEstatus()==true){
                 estado.setEstatus(false);
                 estadodao.modificarEstado(estado);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Estado Inhabilitado."));
+                    }
+                else
+                {
+                    if(estado.getEstatus()==false){
+                estado.setEstatus(true);
+                estadodao.modificarEstado(estado);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Estado Habilitado."));
+                    }
+                }
             }
             catch(Exception e)
             {
                 throw e;
             }
-    } 
-    
+    }
 }

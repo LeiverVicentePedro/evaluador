@@ -12,13 +12,13 @@
 
             <ui:define name="content">
                 <h:form id="formaExterior">
-                    <p:growl id="mensaje" autoUpdate="true"/>
+                   
                     
                     <f:event type="preRenderView" listener="#{categoriaBEAN.listarCategorias()}"/>
                     
                     <p:separator style="visibility: hidden;"/>
 
-                    <p:outputLabel class="titulo" value="Normas de Evaluación"/>
+                    <p:outputLabel value="Normas de Evaluación" style="font-size: 25px;"/>
 
 
                     <p:separator style="visibility: hidden;"/>
@@ -61,19 +61,24 @@
                                   filterStyle="visibility:hidden; height:0">
                             <p:outputLabel value="#{categoria.tipo}"/>
                         </p:column>
-                        <p:column headerText="Estatus"
+                        <p:column headerText="Estado"
                                   sortBy="#{categoria.estatus}" 
                                   filterBy="#{categoria.estatus}"
                                   filterMatchMode="startsWith"
                                   filterStyle="visibility:hidden; height:0">
-                            <p:outputLabel value="#{categoria.estatus}"/>
+                            <center>
+                            <p:outputLabel value="#{categoria.estatus}">
+                                <f:converter converterId="conversionEstatus" />
+                            </p:outputLabel>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Cambiar Estado" style="text-align: center;">
+                            <p:commandButton process="tablaCategorias" icon="#{categoria.icono}" actionListener="#{categoriaBEAN.elegirDatoCategoriaInhabilitar(categoria)}" update="tablaCategorias"/>
                         </p:column>
                         <p:column headerText="Modificar" style="text-align: center;">
                             <p:commandButton icon="fa fa-pencil" actionListener="#{categoriaBEAN.elegirDatoCategoria(categoria)}" oncomplete="PF('Datos').show();" update=":dialogoDatos"/>
                         </p:column>
-                        <p:column headerText="Desactivar" style="text-align: center;">
-                            <p:commandButton icon="fa fa-ban" actionListener="#{categoriaBEAN.bajaCategoria(categoria)}" update="tablaCategorias"/>
-                        </p:column>
+                        
                     </p:dataTable>
 
                     <p:separator style="visibility: hidden;"/>

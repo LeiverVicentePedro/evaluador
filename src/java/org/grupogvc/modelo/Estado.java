@@ -15,6 +15,16 @@ public class Estado implements Serializable {
     private int idestado;
     private String nombre;
     private Boolean estatus;
+    private String icono;
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+    
 
     public int getIdestado() {
         return idestado;

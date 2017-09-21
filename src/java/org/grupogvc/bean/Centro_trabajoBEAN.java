@@ -133,6 +133,17 @@ public class Centro_trabajoBEAN  implements Serializable{
         try{
             centrodao=new Centro_trabajoDAO();
             listacentro = centrodao.listarCentro();
+             for(Centro_trabajo picono:listacentro)
+            {
+                if(picono.getEstatus()==true)
+                {
+                    picono.setIcono("fa fa-ban");
+                }
+                else
+                {
+                    picono.setIcono("fa fa-check");
+                }
+            }
         }
         catch(Exception e){
             throw e;
@@ -157,37 +168,48 @@ public class Centro_trabajoBEAN  implements Serializable{
         
     }
     
-     public void elegirDatoCentroBaja(Centro_trabajo centroElegirDato) throws Exception{//esto es para dar de baja primero se elige el dato y despues se pone en inactivo
+    public void elegirDatoCategoriaInhabilitar(Centro_trabajo centro) throws Exception{
         Centro_trabajoDAO centrodao;
         Centro_trabajo centroTemporal;
         try{
             centrodao= new Centro_trabajoDAO();
-            centroTemporal=centrodao.elegirDatoCentro(centroElegirDato);
+            centroTemporal=centrodao.elegirDatoCentro(centro);
             
             if(centroTemporal != null){
                 this.centro = centroTemporal;
-            }
-            this.bajaCentro();//se manda a llamar al metodo dar de baja para q se modifique el estatus por INACTIVO
-            this.listarCentro();//para actualizar la tabla y se vea reflejado el cambio de estatus
+               }
+            
+            this.inhabilitarTrabajo();
+            this.listarCentro();
             }
         catch (Exception e){
             throw e;
         }
         
     }
-     public void bajaCentro() throws Exception{
+    public void inhabilitarTrabajo() throws Exception{
         Centro_trabajoDAO centrodao;
             try{
                 centrodao= new Centro_trabajoDAO();
+                if(centro.getEstatus()==true){
                 centro.setEstatus(false);
                 centrodao.modificarCentro(centro);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Centro de Tabajo Inhabilitado."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Centro de Trabajo Inhabilitado."));
+                    }
+                else
+                {
+                    if(centro.getEstatus()==false){
+                centro.setEstatus(true);
+                centrodao.modificarCentro(centro);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Centro de Trabajo Habilitado."));
+                    }
+                }
             }
             catch(Exception e)
             {
-                throw e;
+                System.out.println("inhabilitar"+e);
             }
-    } 
+    }
     
 }
 

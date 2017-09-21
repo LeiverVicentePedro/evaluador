@@ -279,12 +279,14 @@ public class PreguntaBEAN implements Serializable{
                 if(pregunta.getEstatus()==true){
                 pregunta.setEstatus(false);
                 preguntadao.modificarPregunta(pregunta);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Pregunta Inhabilitada."));
                     }
                 else
                 {
                     if(pregunta.getEstatus()==false){
                 pregunta.setEstatus(true);
                 preguntadao.modificarPregunta(pregunta);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Pregunta Habilitada."));
                     }
                 }
             }

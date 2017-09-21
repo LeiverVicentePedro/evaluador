@@ -145,24 +145,20 @@ public class PersonalBEAN implements Serializable{
 
     }
 
-    public void bajaPersona(Personal personalBaja) throws Exception {
-
-        try {
-            if(personalBaja!=null){
-            personal = personalBaja;    
-            personal.setEstatus(false);
-            personalDao.modificarPersonal(personal);
-            this.listarPersona();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Personal Inhabilitado."));
-            }
-        } catch (Exception ex) {
-            System.out.println("Error en Persona BEAN -> bajaPersona: "+ex);
-        }
-    }
-
     public void listarPersona() {
         try {
             listapersonal = personalDao.listarPersonal();
+             for(Personal picono:listapersonal)
+            {
+                if(picono.getEstatus()==true)
+                {
+                    picono.setIcono("fa fa-ban");
+                }
+                else
+                {
+                    picono.setIcono("fa fa-check");
+                }
+            }
         } catch (Exception ex) {
             System.out.println("Error en PersonaBEAN -> listarPersona: " + ex);
         }
@@ -196,6 +192,48 @@ public class PersonalBEAN implements Serializable{
                
                 break;
         }
+    }
+    public void elegirDatoPersonalInhabilitar(Personal personaDato) throws Exception{
+        PersonalDAO personadao;
+        Personal personaTemporal;
+        try{
+            personadao= new PersonalDAO();
+            personaTemporal=personadao.elegirDatoPersonal(personaDato);
+            
+            if(personaTemporal != null){
+                this.personal = personaTemporal;
+               }
+            
+            this.inhabilitarPersona();
+            this.listarPersona();
+            }
+        catch (Exception e){
+            throw e;
+        }
+        
+    }
+    public void inhabilitarPersona() throws Exception{
+        PersonalDAO perdao;
+            try{
+                perdao= new PersonalDAO();
+                if(personal.getEstatus()==true){
+                personal.setEstatus(false);
+                perdao.modificarPersonal(personal);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Personal Inhabilitado."));
+                    }
+                else
+                {
+                    if(personal.getEstatus()==false){
+                personal.setEstatus(true);
+                perdao.modificarPersonal(personal);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Información", "Personal Habilitado."));
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
     }
     
 }
